@@ -29,7 +29,7 @@ public class GuiButtonSideConfig extends Button {
 	final SpellParam.Side side;
 
 	public GuiButtonSideConfig(GuiProgrammer gui, int gridX, int gridY, int paramIndex, String paramName, SpellParam.Side side, int x, int y) {
-		super(x, y, 8, 8, Component.empty(), Button::onPress);
+		super(x, y, 8, 8, Component.empty(), Button::onPress, DEFAULT_NARRATION);
 		this.gui = gui;
 		this.gridX = gridX;
 		this.gridY = gridY;
@@ -39,7 +39,7 @@ public class GuiButtonSideConfig extends Button {
 	}
 
 	public GuiButtonSideConfig(GuiProgrammer gui, int gridX, int gridY, int paramIndex, String paramName, SpellParam.Side side, int x, int y, OnPress pressable) {
-		super(x, y, 8, 8, Component.empty(), pressable);
+		super(x, y, 8, 8, Component.empty(), pressable, DEFAULT_NARRATION);
 		this.gui = gui;
 		this.gridX = gridX;
 		this.gridY = gridY;
@@ -49,10 +49,10 @@ public class GuiButtonSideConfig extends Button {
 	}
 
 	@Override
-	public void renderButton(PoseStack ms, int par2, int par3, float pTicks) {
+	public void renderButton(PoseStack ms, int x, int y, float pTicks) {
 		if(active && visible && !gui.takingScreenshot) {
-			int minX = x;
-			int minY = y;
+			int minX = getX();
+			int minY = getY();
 			int maxX = minX + 8;
 			int maxY = minY + 8;
 

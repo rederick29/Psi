@@ -10,7 +10,7 @@ package vazkii.psi.common.crafting.recipe;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +35,7 @@ public class DimensionTrickRecipe extends TrickRecipe {
 	}
 
 	public DimensionTrickRecipe(ResourceLocation id, @Nullable PieceCraftingTrick piece, Ingredient input, ItemStack output, ItemStack cad, ResourceLocation dimensionKey) {
-		this(id, piece, input, output, cad, ResourceKey.create(Registry.DIMENSION_REGISTRY, dimensionKey));
+	this(id, piece, input, output, cad, ResourceKey.create(Registries.DIMENSION, dimensionKey));
 	}
 
 	@Override

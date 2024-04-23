@@ -12,11 +12,13 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
 
+import org.jetbrains.annotations.NotNull;
 import vazkii.psi.api.spell.ISpellAcceptor;
 import vazkii.psi.api.spell.Spell;
 import vazkii.psi.common.item.ItemSpellDrive;
@@ -24,10 +26,10 @@ import vazkii.psi.common.item.ItemSpellDrive;
 import javax.annotation.Nonnull;
 
 public class BulletToDriveRecipe extends CustomRecipe {
-	public static final SimpleRecipeSerializer<BulletToDriveRecipe> SERIALIZER = new SimpleRecipeSerializer<>(BulletToDriveRecipe::new);
+	public static final SimpleCraftingRecipeSerializer<BulletToDriveRecipe> SERIALIZER = new SimpleCraftingRecipeSerializer<>(BulletToDriveRecipe::new);
 
-	public BulletToDriveRecipe(ResourceLocation id) {
-		super(id);
+	public BulletToDriveRecipe(ResourceLocation id, CraftingBookCategory bookCategory) {
+		super(id, bookCategory);
 	}
 
 	@Override
@@ -80,7 +82,7 @@ public class BulletToDriveRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
+	public @NotNull NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
 		NonNullList<ItemStack> list = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
 
 		for(int i = 0; i < list.size(); ++i) {

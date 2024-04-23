@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 
 public class PsiItemModelGenerator extends ItemModelProvider {
 	public PsiItemModelGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, LibMisc.MOD_ID, existingFileHelper);
+		super(generator.getPackOutput(), LibMisc.MOD_ID, existingFileHelper);
 	}
 
 	private void pointToBlock(Item item) {

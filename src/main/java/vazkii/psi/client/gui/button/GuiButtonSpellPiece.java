@@ -16,6 +16,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 
+import org.jetbrains.annotations.NotNull;
 import vazkii.psi.api.spell.SpellPiece;
 import vazkii.psi.client.gui.GuiProgrammer;
 
@@ -24,32 +25,32 @@ public class GuiButtonSpellPiece extends Button {
 	final GuiProgrammer gui;
 
 	public GuiButtonSpellPiece(GuiProgrammer gui, SpellPiece piece, int x, int y) {
-		super(x, y, 16, 16, Component.empty(), button -> {});
+		super(x, y, 16, 16, Component.empty(), button -> {}, DEFAULT_NARRATION);
 		this.gui = gui;
 		this.piece = piece;
 	}
 
 	public GuiButtonSpellPiece(GuiProgrammer gui, SpellPiece piece, int x, int y, Button.OnPress pressable) {
-		super(x, y, 16, 16, Component.empty(), pressable);
+		super(x, y, 16, 16, Component.empty(), pressable, DEFAULT_NARRATION);
 		this.gui = gui;
 		this.piece = piece;
 	}
 
 	@Override
-	public void renderButton(PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderButton(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
 		if(active && visible) {
-			boolean hover = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+			boolean hover = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
 
 			MultiBufferSource.BufferSource buffers = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 			ms.pushPose();
-			ms.translate(x, y, 0);
+			ms.translate(getX(), getY(), 0);
 			piece.draw(ms, buffers, 0xF000F0);
 			buffers.endBatch();
 			ms.popPose();
 			RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
 			if(hover) {
 				piece.getTooltip(gui.tooltip);
-				blit(ms, x, y, 16, gui.ySize, 16, 16);
+				blit(ms, getX(), getY(), 16, gui.ySize, 16, 16);
 			}
 
 		}

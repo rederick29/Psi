@@ -10,8 +10,8 @@ package vazkii.psi.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
+import org.joml.Matrix4f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -38,8 +38,8 @@ public class RenderTileProgrammer implements BlockEntityRenderer<TileProgrammer>
 			int light = Psi.magical ? worldLight : 0xF000F0;
 
 			ms.translate(0, 1.62F, 0);
-			ms.mulPose(Vector3f.ZP.rotationDegrees(180F));
-			ms.mulPose(Vector3f.YP.rotationDegrees(-90F));
+			ms.mulPose(Axis.ZP.rotationDegrees(180F));
+			ms.mulPose(Axis.YP.rotationDegrees(-90F));
 
 			float rot = 90F;
 			BlockState state = te.getBlockState();
@@ -60,16 +60,16 @@ public class RenderTileProgrammer implements BlockEntityRenderer<TileProgrammer>
 			}
 
 			ms.translate(0.5F, 0F, 0.5F);
-			ms.mulPose(Vector3f.YP.rotationDegrees(rot));
+			ms.mulPose(Axis.YP.rotationDegrees(rot));
 			ms.translate(-0.5F, 0F, -0.5F);
 
 			float f = 1F / 300F;
 			ms.scale(f, f, -f);
 
 			if(Psi.magical) {
-				ms.mulPose(Vector3f.XP.rotationDegrees(90F));
+				ms.mulPose(Axis.XP.rotationDegrees(90F));
 				ms.translate(70F, -220F, -100F + Math.sin(ClientTickHandler.total / 50) * 10);
-				ms.mulPose(Vector3f.XP.rotationDegrees(-16F + (float) Math.cos(ClientTickHandler.total / 100) * 10F));
+				ms.mulPose(Axis.XP.rotationDegrees(-16F + (float) Math.cos(ClientTickHandler.total / 100) * 10F));
 			} else {
 				ms.translate(70F, 0F, -200F);
 			}

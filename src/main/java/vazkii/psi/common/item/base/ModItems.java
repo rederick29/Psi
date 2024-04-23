@@ -8,16 +8,17 @@
  */
 package vazkii.psi.common.item.base;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
-import vazkii.psi.common.core.PsiCreativeTab;
 import vazkii.psi.common.item.*;
 import vazkii.psi.common.item.armor.ItemPsimetalExosuitBoots;
 import vazkii.psi.common.item.armor.ItemPsimetalExosuitChestplate;
@@ -293,7 +294,80 @@ public final class ModItems {
 	}
 
 	public static Item.Properties defaultBuilder() {
-		return new Item.Properties().tab(PsiCreativeTab.INSTANCE);
+		return new Item.Properties();
 	}
 
+	public static void fillItems(NonNullList<ItemStack> items) {
+		items.add(new ItemStack(ModItems.psidust));
+		items.add(new ItemStack(ModItems.psimetal));
+		items.add(new ItemStack(ModItems.psigem));
+		items.add(new ItemStack(ModItems.ebonyPsimetal));
+		items.add(new ItemStack(ModItems.ivoryPsimetal));
+		items.add(new ItemStack(ModItems.ebonySubstance));
+		items.add(new ItemStack(ModItems.ivorySubstance));
+
+		items.add(new ItemStack(ModItems.cadCoreBasic));
+		items.add(new ItemStack(ModItems.cadCoreOverclocked));
+		items.add(new ItemStack(ModItems.cadCoreConductive));
+		items.add(new ItemStack(ModItems.cadCoreHyperClocked));
+		items.add(new ItemStack(ModItems.cadCoreRadiative));
+
+		items.add(new ItemStack(ModItems.cadSocketBasic));
+		items.add(new ItemStack(ModItems.cadSocketSignaling));
+		items.add(new ItemStack(ModItems.cadSocketLarge));
+		items.add(new ItemStack(ModItems.cadSocketTransmissive));
+		items.add(new ItemStack(ModItems.cadSocketHuge));
+
+		items.add(new ItemStack(ModItems.cadBatteryBasic));
+		items.add(new ItemStack(ModItems.cadBatteryExtended));
+		items.add(new ItemStack(ModItems.cadBatteryUltradense));
+
+		items.add(new ItemStack(ModItems.cadColorizerWhite));
+		items.add(new ItemStack(ModItems.cadColorizerOrange));
+		items.add(new ItemStack(ModItems.cadColorizerMagenta));
+		items.add(new ItemStack(ModItems.cadColorizerLightBlue));
+		items.add(new ItemStack(ModItems.cadColorizerYellow));
+		items.add(new ItemStack(ModItems.cadColorizerLime));
+		items.add(new ItemStack(ModItems.cadColorizerPink));
+		items.add(new ItemStack(ModItems.cadColorizerGray));
+		items.add(new ItemStack(ModItems.cadColorizerLightGray));
+		items.add(new ItemStack(ModItems.cadColorizerCyan));
+		items.add(new ItemStack(ModItems.cadColorizerPurple));
+		items.add(new ItemStack(ModItems.cadColorizerBlue));
+		items.add(new ItemStack(ModItems.cadColorizerBrown));
+		items.add(new ItemStack(ModItems.cadColorizerGreen));
+		items.add(new ItemStack(ModItems.cadColorizerRed));
+		items.add(new ItemStack(ModItems.cadColorizerBlack));
+		items.add(new ItemStack(ModItems.cadColorizerRainbow));
+		items.add(new ItemStack(ModItems.cadColorizerPsi));
+		items.add(new ItemStack(ModItems.cadColorizerEmpty));
+
+		items.add(new ItemStack(ModItems.spellBullet));
+		items.add(new ItemStack(ModItems.projectileSpellBullet));
+		items.add(new ItemStack(ModItems.loopSpellBullet));
+		items.add(new ItemStack(ModItems.circleSpellBullet));
+		items.add(new ItemStack(ModItems.grenadeSpellBullet));
+		items.add(new ItemStack(ModItems.chargeSpellBullet));
+		items.add(new ItemStack(ModItems.mineSpellBullet));
+
+		items.add(new ItemStack(ModItems.spellDrive));
+		items.add(new ItemStack(ModItems.detonator));
+		items.add(new ItemStack(ModItems.exosuitController));
+
+		items.add(new ItemStack(ModItems.exosuitSensorLight));
+		items.add(new ItemStack(ModItems.exosuitSensorHeat));
+		items.add(new ItemStack(ModItems.exosuitSensorStress));
+		items.add(new ItemStack(ModItems.exosuitSensorWater));
+		items.add(new ItemStack(ModItems.exosuitSensorTrigger));
+
+		items.add(new ItemStack(ModItems.vectorRuler));
+		items.add(new ItemStack(ModItems.psimetalShovel));
+		items.add(new ItemStack(ModItems.psimetalPickaxe));
+		items.add(new ItemStack(ModItems.psimetalAxe));
+		items.add(new ItemStack(ModItems.psimetalSword));
+		items.add(new ItemStack(ModItems.psimetalExosuitHelmet));
+		items.add(new ItemStack(ModItems.psimetalExosuitChestplate));
+		items.add(new ItemStack(ModItems.psimetalExosuitLeggings));
+		items.add(new ItemStack(ModItems.psimetalExosuitBoots));
+	}
 }

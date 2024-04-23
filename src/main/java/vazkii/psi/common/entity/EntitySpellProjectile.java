@@ -10,6 +10,8 @@ package vazkii.psi.common.entity;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -285,7 +287,7 @@ public class EntitySpellProjectile extends ThrowableProjectile {
 
 	@Nonnull
 	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
+	public ClientboundAddEntityPacket getAddEntityPacket() {
+		return (ClientboundAddEntityPacket) NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

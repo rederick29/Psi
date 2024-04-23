@@ -49,6 +49,7 @@ import vazkii.psi.client.render.entity.RenderSpellCircle;
 import vazkii.psi.client.render.entity.RenderSpellProjectile;
 import vazkii.psi.client.render.tile.RenderTileProgrammer;
 import vazkii.psi.common.block.tile.TileProgrammer;
+import vazkii.psi.common.core.PsiCreativeTab;
 import vazkii.psi.common.core.proxy.IProxy;
 import vazkii.psi.common.entity.EntitySpellCharge;
 import vazkii.psi.common.entity.EntitySpellCircle;
@@ -100,7 +101,7 @@ public class ClientProxy implements IProxy {
 		});
 	}
 
-	private void modelBake(ModelEvent.BakingCompleted event) {
+	private void modelBake(ModelEvent.ModifyBakingResult event) {
 		event.getModels().put(new ModelResourceLocation(ForgeRegistries.ITEMS.getKey(ModItems.cad), "inventory"), new ModelCAD());
 	}
 
@@ -111,8 +112,12 @@ public class ClientProxy implements IProxy {
 		event.register(new ResourceLocation(LibMisc.MOD_ID, "item/" + LibItemNames.CAD_EBONY_PSIMETAL));
 		event.register(new ResourceLocation(LibMisc.MOD_ID, "item/" + LibItemNames.CAD_IVORY_PSIMETAL));
 		event.register(new ResourceLocation(LibMisc.MOD_ID, "item/" + LibItemNames.CAD_CREATIVE)); //TODO models
-		ModelBakery.UNREFERENCED_TEXTURES.addAll(ClientPsiAPI.getAllSpellPieceMaterial());
-		ModelBakery.UNREFERENCED_TEXTURES.add(new Material(ClientPsiAPI.PSI_PIECE_TEXTURE_ATLAS, PieceConnector.LINES_TEXTURE));
+		event.register(PieceConnector.LINES_TEXTURE);
+		// TODOL: mayhaps don't register spell textures since they're not block models
+		// research new rendering in 1.19.3
+		ClientPsiAPI.getAllSpellPieceMaterial().forEach(material -> {
+			event.register(material.texture());
+		});
 	}
 
 	@Override

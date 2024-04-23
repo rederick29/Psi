@@ -9,10 +9,12 @@
 package vazkii.psi.common.block.base;
 
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -116,5 +118,20 @@ public class ModBlocks {
 				MenuScreens.register(containerCADAssembler, GuiCADAssembler::new);
 			});
 		});
+	}
+
+
+	public static void fillItems(NonNullList<ItemStack> items) {
+		items.add(new ItemStack(ModBlocks.cadAssembler));
+		items.add(new ItemStack(ModBlocks.programmer));
+		items.add(new ItemStack(ModBlocks.psidustBlock));
+		items.add(new ItemStack(ModBlocks.psimetalBlock));
+		items.add(new ItemStack(ModBlocks.psigemBlock));
+		items.add(new ItemStack(ModBlocks.psimetalPlateBlack));
+		items.add(new ItemStack(ModBlocks.psimetalPlateBlackLight));
+		items.add(new ItemStack(ModBlocks.psimetalPlateWhite));
+		items.add(new ItemStack(ModBlocks.psimetalPlateWhiteLight));
+		items.add(new ItemStack(ModBlocks.psimetalEbony));
+		items.add(new ItemStack(ModBlocks.psimetalIvory));
 	}
 }

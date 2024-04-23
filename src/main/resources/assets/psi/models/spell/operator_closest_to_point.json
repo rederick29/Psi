@@ -1,0 +1,7 @@
+
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "psi:spell/operator_closest_to_point"
+	}
+}

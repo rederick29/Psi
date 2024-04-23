@@ -9,7 +9,7 @@
 package vazkii.psi.common.spell.trick;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import vazkii.psi.api.internal.Vector3;
@@ -72,7 +72,7 @@ public class PieceTrickExplode extends PieceTrick {
 		BlockPos pos = positionVal.toBlockPos();
 		BlockState state = context.focalPoint.getCommandSenderWorld().getBlockState(pos);
 
-		context.focalPoint.getCommandSenderWorld().explode(context.focalPoint, positionVal.x, positionVal.y, positionVal.z, (float) powerVal, state.getMaterial().isLiquid() ? Explosion.BlockInteraction.NONE : Explosion.BlockInteraction.BREAK);
+		context.focalPoint.getCommandSenderWorld().explode(context.focalPoint, positionVal.x, positionVal.y, positionVal.z, (float) powerVal, state.getMaterial().isLiquid() ? Level.ExplosionInteraction.NONE : Level.ExplosionInteraction.BLOCK);
 		return null;
 	}
 

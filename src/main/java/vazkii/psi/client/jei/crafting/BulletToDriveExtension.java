@@ -19,10 +19,10 @@ import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategor
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
+import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.psi.api.spell.ISpellAcceptor;
 import vazkii.psi.common.crafting.recipe.BulletToDriveRecipe;
 import vazkii.psi.common.item.ItemSpellBullet;
@@ -42,7 +42,7 @@ public class BulletToDriveExtension implements ICraftingCategoryExtension {
 
 		inputs = ImmutableList.of(
 				ImmutableList.of(new ItemStack(ModItems.spellDrive)),
-				Registry.ITEM.stream()
+				ForgeRegistries.ITEMS.getValues().stream()
 						.filter(item -> item instanceof ItemSpellBullet)
 						.map(ItemStack::new)
 						.collect(Collectors.toList()));

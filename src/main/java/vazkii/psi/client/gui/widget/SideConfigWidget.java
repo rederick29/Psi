@@ -19,6 +19,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import vazkii.psi.api.spell.SpellGrid;
@@ -45,7 +46,7 @@ public class SideConfigWidget extends AbstractWidget {
 	}
 
 	@Override
-	public void renderButton(PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderButton(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
 		SpellPiece piece = null;
 		if(SpellGrid.exists(GuiProgrammer.selectedX, GuiProgrammer.selectedY)) {
 			piece = parent.spell.grid.gridData[GuiProgrammer.selectedX][GuiProgrammer.selectedY];
@@ -86,7 +87,7 @@ public class SideConfigWidget extends AbstractWidget {
 	}
 
 	@Override
-	public void updateNarration(NarrationElementOutput p_169152_) {
+	protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
 
 	}
 }

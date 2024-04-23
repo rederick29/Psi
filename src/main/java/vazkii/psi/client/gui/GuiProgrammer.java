@@ -22,7 +22,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -343,7 +343,7 @@ public class GuiProgrammer extends Screen {
 			}
 		});
 		ms.popPose();
-		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);;
+		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		ms.translate(0, 0, 1);
 		RenderSystem.setShaderTexture(0, texture);
 
@@ -361,7 +361,7 @@ public class GuiProgrammer extends Screen {
 
 		if(takingScreenshot) {
 			Set<String> addons = spell.getPieceNamespaces().stream().filter(namespace -> !namespace.equals("psi")).collect(Collectors.toSet());
-			if(addons.size() > 0) {
+			if(!addons.isEmpty()) {
 				String requiredAddons = ChatFormatting.GREEN + "Required Addons:";
 				font.drawShadow(ms, requiredAddons, left - font.width(requiredAddons) - 5, top + 40, 0xFFFFFF);
 				int i = 1;
@@ -426,18 +426,18 @@ public class GuiProgrammer extends Screen {
 		}
 
 		if(Psi.magical) {
-			font.draw(ms, I18n.get("psimisc.name"), left + padLeft, spellNameField.y + 1, color);
+			font.draw(ms, I18n.get("psimisc.name"), left + padLeft, spellNameField.getY() + 1, color);
 		} else {
-			font.drawShadow(ms, I18n.get("psimisc.name"), left + padLeft, spellNameField.y + 1, color);
+			font.drawShadow(ms, I18n.get("psimisc.name"), left + padLeft, spellNameField.getY() + 1, color);
 		}
 
 		//Add here comment
 		if(commentEnabled) {
 			String enterCommit = I18n.get("psimisc.enter_commit");
-			font.drawShadow(ms, enterCommit, left + xSize / 2f - font.width(enterCommit) / 2f, commentField.y + 24, 0xFFFFFF);
+			font.drawShadow(ms, enterCommit, left + xSize / 2f - font.width(enterCommit) / 2f, commentField.getY() + 24, 0xFFFFFF);
 
 			String semicolonLine = I18n.get("psimisc.semicolon_line");
-			font.drawShadow(ms, semicolonLine, left + xSize / 2f - font.width(semicolonLine) / 2f, commentField.y + 34, 0xFFFFFF);
+			font.drawShadow(ms, semicolonLine, left + xSize / 2f - font.width(semicolonLine) / 2f, commentField.getY() + 34, 0xFFFFFF);
 		}
 
 		List<Component> legitTooltip = null;
@@ -600,7 +600,6 @@ public class GuiProgrammer extends Screen {
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-		getMinecraft().keyboardHandler.setSendRepeatsToGui(true);
 		if(programmer != null) {
 			spell = programmer.spell;
 		}
@@ -954,7 +953,7 @@ public class GuiProgrammer extends Screen {
 		return !panelWidget.panelEnabled && !commentEnabled;
 	}
 
-	public List<Widget> getButtons() {
+	public List<Renderable> getButtons() {
 		return this.renderables;
 	}
 

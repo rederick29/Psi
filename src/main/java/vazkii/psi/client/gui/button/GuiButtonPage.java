@@ -22,25 +22,25 @@ public class GuiButtonPage extends Button {
 	final GuiProgrammer gui;
 
 	public GuiButtonPage(int x, int y, boolean right, GuiProgrammer gui) {
-		super(x, y, 18, 10, Component.empty(), button -> {});
+		super(x, y, 18, 10, Component.empty(), button -> {}, DEFAULT_NARRATION);
 		this.gui = gui;
 		this.right = right;
 	}
 
 	public GuiButtonPage(int x, int y, boolean right, GuiProgrammer gui, Button.OnPress pressable) {
-		super(x, y, 18, 10, Component.empty(), pressable);
+		super(x, y, 18, 10, Component.empty(), pressable, DEFAULT_NARRATION);
 		this.gui = gui;
 		this.right = right;
 	}
 
 	@Override
-	public void renderButton(PoseStack ms, int par2, int par3, float pTicks) {
+	public void renderButton(PoseStack ms, int x, int y, float pTicks) {
 		if(active) {
-			boolean hover = par2 >= x && par3 >= y && par2 < x + width && par3 < y + height;
+			boolean hover = x >= getX() && y >= getY() && x < getX() + width && y < getY() + height;
 
 			RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-			blit(ms, x, y, hover ? 216 : 198, right ? 145 : 155, width, height);
+			blit(ms, getX(), getY(), hover ? 216 : 198, right ? 145 : 155, width, height);
 
 			if(hover) {
 				gui.tooltip.add(Component.translatable(right ? "psimisc.next_page" : "psimisc.prev_page"));

@@ -8,8 +8,11 @@
  */
 package vazkii.psi.data;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -17,14 +20,16 @@ import vazkii.psi.common.item.base.ModItems;
 import vazkii.psi.common.lib.LibMisc;
 import vazkii.psi.common.lib.ModTags;
 
+import java.util.concurrent.CompletableFuture;
+
 public class PsiItemTagProvider extends ItemTagsProvider {
 
-	public PsiItemTagProvider(DataGenerator generator, PsiBlockTagProvider blockTagProvider, ExistingFileHelper existingFileHelper) {
-		super(generator, blockTagProvider, LibMisc.MOD_ID, existingFileHelper);
+	public PsiItemTagProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> blockTagProvider, TagsProvider<Block> tagsProvider, ExistingFileHelper existingFileHelper) {
+		super(generator.getPackOutput(), blockTagProvider, tagsProvider, LibMisc.MOD_ID, existingFileHelper);
 	}
 
 	@Override
-	protected void addTags() {
+	protected void addTags(HolderLookup.Provider provider) {
 		tag(Tags.Items.DUSTS).add(ModItems.psidust);
 		tag(Tags.Items.INGOTS).add(ModItems.psimetal);
 		tag(Tags.Items.INGOTS).add(ModItems.ebonyPsimetal);

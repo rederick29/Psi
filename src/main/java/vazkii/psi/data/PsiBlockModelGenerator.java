@@ -22,7 +22,7 @@ import static vazkii.psi.common.Psi.location;
 
 public class PsiBlockModelGenerator extends BlockStateProvider {
 	public PsiBlockModelGenerator(DataGenerator gen, ExistingFileHelper exFileHelper) {
-		super(gen, LibMisc.MOD_ID, exFileHelper);
+		super(gen.getPackOutput(), LibMisc.MOD_ID, exFileHelper);
 	}
 
 	@Override

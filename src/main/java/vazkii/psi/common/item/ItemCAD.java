@@ -572,12 +572,7 @@ public class ItemCAD extends Item implements ICAD {
 		return false;
 	}
 
-	@Override
-	public void fillItemCategory(@Nonnull CreativeModeTab tab, @Nonnull NonNullList<ItemStack> subItems) {
-		if(!allowedIn(tab)) {
-			return;
-		}
-
+	public static void fillItemCategory(@Nonnull NonNullList<ItemStack> subItems) {
 		// Basic Iron CAD
 		subItems.add(makeCAD(new ItemStack(ModItems.cadAssemblyIron)));
 
@@ -616,7 +611,6 @@ public class ItemCAD extends Item implements ICAD {
 				new ItemStack(ModItems.cadCoreHyperClocked),
 				new ItemStack(ModItems.cadSocketTransmissive),
 				new ItemStack(ModItems.cadBatteryUltradense)));
-
 	}
 
 	@OnlyIn(Dist.CLIENT)

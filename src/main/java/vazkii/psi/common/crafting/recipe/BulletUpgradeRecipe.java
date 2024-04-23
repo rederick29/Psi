@@ -15,10 +15,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 import vazkii.psi.common.item.ItemSpellBullet;
@@ -92,6 +89,11 @@ public class BulletUpgradeRecipe implements CraftingRecipe {
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return SERIALIZER;
+	}
+
+	@Override
+	public CraftingBookCategory category() {
+		return CraftingBookCategory.MISC;
 	}
 
 	private static class Serializer implements RecipeSerializer<BulletUpgradeRecipe> {

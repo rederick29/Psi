@@ -12,9 +12,10 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -26,10 +27,10 @@ import vazkii.psi.common.item.ItemCAD;
 import javax.annotation.Nonnull;
 
 public class ColorizerChangeRecipe extends CustomRecipe {
-	public static final SimpleRecipeSerializer<ColorizerChangeRecipe> SERIALIZER = new SimpleRecipeSerializer<>(ColorizerChangeRecipe::new);
+	public static final SimpleCraftingRecipeSerializer<ColorizerChangeRecipe> SERIALIZER = new SimpleCraftingRecipeSerializer<>(ColorizerChangeRecipe::new);
 
-	public ColorizerChangeRecipe(ResourceLocation id) {
-		super(id);
+	public ColorizerChangeRecipe(ResourceLocation id, CraftingBookCategory bookCategory) {
+		super(id, bookCategory);
 	}
 
 	@Override

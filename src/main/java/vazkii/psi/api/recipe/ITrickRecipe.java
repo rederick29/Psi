@@ -9,7 +9,6 @@
 package vazkii.psi.api.recipe;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -17,6 +16,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.spell.piece.PieceCraftingTrick;
 
@@ -53,7 +53,7 @@ public interface ITrickRecipe extends Recipe<RecipeWrapper> {
 	@Nonnull
 	@Override
 	default RecipeType<?> getType() {
-		return Registry.RECIPE_TYPE.get(TYPE_ID);
+		return ForgeRegistries.RECIPE_TYPES.getValue(TYPE_ID);
 	}
 
 	@Nonnull

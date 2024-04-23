@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import org.jetbrains.annotations.NotNull;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.internal.PsiRenderHelper;
 import vazkii.psi.api.spell.SpellCompilationException;
@@ -39,7 +40,7 @@ public class StatusWidget extends AbstractWidget {
 	}
 
 	@Override
-	public void renderButton(PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderButton(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
 		RenderSystem.setShaderColor(1f, 1f, 1f, 1F);
 		RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
 		blit(ms, parent.left - 48, parent.top + 5, parent.xSize, 0, 48, 30);
@@ -74,7 +75,7 @@ public class StatusWidget extends AbstractWidget {
 	}
 
 	@Override
-	public void updateNarration(NarrationElementOutput p_169152_) {
-		//TODO Narration?
+	protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
+
 	}
 }

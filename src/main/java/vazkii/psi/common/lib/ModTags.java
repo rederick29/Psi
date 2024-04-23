@@ -8,7 +8,7 @@
  */
 package vazkii.psi.common.lib;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -33,11 +33,11 @@ public class ModTags {
 	public static final TagKey<Item> BLOCK_IVORY_PSIMETAL = forgeTag("storage_blocks/ivory_psimetal");
 
 	private static TagKey<Item> tag(String name) {
-		return TagKey.create(Registry.ITEM_REGISTRY, prefix(name));
+		return TagKey.create(Registries.ITEM, prefix(name));
 	}
 
 	private static TagKey<Item> forgeTag(String name) {
-		return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", name));
+		return TagKey.create(Registries.ITEM, new ResourceLocation("forge", name));
 	}
 
 	public static ResourceLocation prefix(String path) {
@@ -51,7 +51,7 @@ public class ModTags {
 		public static final TagKey<Block> BLOCK_IVORY_PSIMETAL = fromTag(ModTags.BLOCK_IVORY_PSIMETAL);
 
 		private static TagKey<Block> fromTag(TagKey<?> tag) {
-			return TagKey.create(Registry.BLOCK_REGISTRY, tag.location());
+			return TagKey.create(Registries.BLOCK, tag.location());
 		}
 	}
 }

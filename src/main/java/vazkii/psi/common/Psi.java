@@ -63,7 +63,6 @@ public class Psi {
 		PsiAPI.internalHandler = new InternalMethodHandler();
 
 		//CrashReportExtender.registerCrashCallable(new CrashReportHandler());
-
 		ContributorSpellCircleHandler.firstStart();
 		DefaultStats.registerStats();
 		MessageRegister.init();
