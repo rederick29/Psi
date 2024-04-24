@@ -307,6 +307,13 @@ public final class ModItems {
 		items.add(new ItemStack(ModItems.ebonySubstance));
 		items.add(new ItemStack(ModItems.ivorySubstance));
 
+		items.add(new ItemStack(ModItems.cadAssemblyIron));
+		items.add(new ItemStack(ModItems.cadAssemblyGold));
+		items.add(new ItemStack(ModItems.cadAssemblyPsimetal));
+		items.add(new ItemStack(ModItems.cadAssemblyIvory));
+		items.add(new ItemStack(ModItems.cadAssemblyEbony));
+		items.add(new ItemStack(ModItems.cadAssemblyCreative));
+
 		items.add(new ItemStack(ModItems.cadCoreBasic));
 		items.add(new ItemStack(ModItems.cadCoreOverclocked));
 		items.add(new ItemStack(ModItems.cadCoreConductive));

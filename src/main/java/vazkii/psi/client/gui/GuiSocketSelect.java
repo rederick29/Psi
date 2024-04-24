@@ -20,6 +20,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
@@ -96,8 +97,8 @@ public class GuiSocketSelect extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack ms, int mx, int my, float delta) {
-		super.render(ms, mx, my, delta);
+	public void render(GuiGraphics guiGraphics, int mx, int my, float delta) {
+		super.render(guiGraphics, mx, my, delta);
 
 		timeIn += delta;
 
@@ -202,7 +203,7 @@ public class GuiSocketSelect extends Screen {
 				int xdp = (int) ((xp - x) * mod + x);
 				int ydp = (int) ((yp - y) * mod + y);
 
-				mc.getItemRenderer().renderGuiItem(ms, stack, xdp - 8, ydp - 8);
+				guiGraphics.renderFakeItem(stack, xdp - 8, ydp - 8);
 
 				if(xsp < x) {
 					xsp -= width - 8;
@@ -211,13 +212,13 @@ public class GuiSocketSelect extends Screen {
 					ysp -= 9;
 				}
 
-				font.drawShadow(ms, name, xsp, ysp, 0xFFFFFF);
+				guiGraphics.drawString(font, name, xsp, ysp, 0xFFFFFF, true);
 				if(seg == socketable.getSelectedSlot()) {
 					int color = 0x00FF00;
 					if(!cadStack.isEmpty()) {
 						color = 0xFF0000 - Psi.proxy.getColorForCAD(cadStack);
 					}
-					font.drawShadow(ms, I18n.get("psimisc.selected"), xsp + width / 4, ysp + font.lineHeight, color);
+					guiGraphics.drawString(font, I18n.get("psimisc.selected"), xsp + width / 4, ysp + font.lineHeight, color, true);
 				}
 
 				mod = 0.8;
@@ -225,7 +226,7 @@ public class GuiSocketSelect extends Screen {
 				ydp = (int) ((yp - y) * mod + y);
 
 				RenderSystem.setShaderTexture(0, signs.get(seg));
-				blit(ms, xdp - 8, ydp - 8, 0, 0, 16, 16, 16, 16);
+				guiGraphics.blit(signs.get(seg), xdp - 8, ydp - 8, 0, 0, 16, 16, 16, 16);
 			}
 		}
 
@@ -249,17 +250,19 @@ public class GuiSocketSelect extends Screen {
 				ItemStack stack = controlledStacks[i];
 				int rx = xs + i * 18;
 				float ry = ys + (-yoff * shift);
-				PsiRenderHelper.transferMsToGl(ms, () -> mc.getItemRenderer().renderAndDecorateItem(ms, stack, rx, (int) ry));
+				// TODO(rederick29): is this helper still needed?
+				PsiRenderHelper.transferMsToGl(guiGraphics.pose(), () -> guiGraphics.renderFakeItem(stack, rx, (int) ry));
 			}
 
 		}
 
 		if(!socketableStack.isEmpty()) {
-			ms.pushPose();
-			ms.scale(scale, scale, scale);
-			PsiRenderHelper.transferMsToGl(ms, () -> mc.getItemRenderer().renderAndDecorateItem(ms, socketableStack,
+			guiGraphics.pose().pushPose();
+			guiGraphics.pose().scale(scale, scale, scale);
+			// TODO(rederick29): is this helper still needed?
+			PsiRenderHelper.transferMsToGl(guiGraphics.pose(), () -> guiGraphics.renderFakeItem(socketableStack,
 					(int) (x / scale) - 8, (int) (y / scale) - 8));
-			ms.popPose();
+			guiGraphics.pose().popPose();
 		}
 		//Lighting.turnOff();
 		RenderSystem.disableBlend();

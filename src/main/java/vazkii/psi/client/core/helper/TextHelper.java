@@ -8,10 +8,9 @@
  */
 package vazkii.psi.client.core.helper;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -22,8 +21,7 @@ import java.util.List;
 public final class TextHelper {
 
 	@OnlyIn(Dist.CLIENT)
-	public static List<String> renderText(int x, int y, int width, String unlocalizedText, boolean centered, boolean doit, Object... format) {
-		PoseStack matrixStack = new PoseStack();
+	public static List<String> renderText(GuiGraphics guiGraphics, int x, int y, int width, String unlocalizedText, boolean centered, boolean doit, Object... format) {
 		Font font = Minecraft.getInstance().font;
 		String text = I18n.get(unlocalizedText, format);
 
@@ -71,9 +69,9 @@ public final class TextHelper {
 				int swidth = font.width(s);
 				if(doit) {
 					if(centered) {
-						font.draw(matrixStack, s, xi + width / 2 - swidth / 2, y, 0xFFFFFF);
+						guiGraphics.drawString(font, s, xi + width / 2 - swidth / 2, y, 0xFFFFFF, true);
 					} else {
-						font.draw(matrixStack, s, xi, y, 0xFFFFFF);
+						guiGraphics.drawString(font, s, xi, y, 0xFFFFFF, true);
 					}
 				}
 				xi += swidth + spacing + extra;

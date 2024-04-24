@@ -72,7 +72,7 @@ public class PieceTrickMoveBlockSequence extends PieceTrick {
 		Vector3 positionVal = SpellHelpers.getVector3(this, context, position, true, false);
 		Vector3 targetVal = SpellHelpers.getVector3(this, context, target, false, false);
 		int maxBlocksVal = this.getParamValue(context, maxBlocks).intValue();
-		Level world = context.focalPoint.level;
+		Level world = context.focalPoint.level();
 
 		Map<BlockPos, BlockState> toSet = new HashMap<>();
 		Map<BlockPos, BlockState> toRemove = new HashMap<>();
@@ -147,12 +147,12 @@ public class PieceTrickMoveBlockSequence extends PieceTrick {
 						continue;
 					}
 
-					if(immovableBlocks.contains(nextPosPushPos) || !(world.isEmptyBlock(nextPosPushPos) || nextPosPushPosState.getMaterial().isReplaceable())) {
+					if(immovableBlocks.contains(nextPosPushPos) || !(world.isEmptyBlock(nextPosPushPos) || nextPosPushPosState.canBeReplaced())) {
 						continue outer;
 					}
 					break;
 				}
-			} else if(!(world.isEmptyBlock(pushToPos) || pushToState.getMaterial().isReplaceable())) {
+			} else if(!(world.isEmptyBlock(pushToPos) || pushToState.canBeReplaced())) {
 				continue;
 			}
 			toRemove.put(blockPos, state);
@@ -160,12 +160,12 @@ public class PieceTrickMoveBlockSequence extends PieceTrick {
 		}
 
 		for(Map.Entry<BlockPos, BlockState> pairtoRemove : toRemove.entrySet()) {
-			context.focalPoint.level.removeBlock(pairtoRemove.getKey(), true);
-			context.focalPoint.level.levelEvent(2001, pairtoRemove.getKey(), Block.getId(pairtoRemove.getValue()));
+			context.focalPoint.level().removeBlock(pairtoRemove.getKey(), true);
+			context.focalPoint.level().levelEvent(2001, pairtoRemove.getKey(), Block.getId(pairtoRemove.getValue()));
 		}
 
 		for(Map.Entry<BlockPos, BlockState> pairToSet : toSet.entrySet()) {
-			context.focalPoint.level.setBlockAndUpdate(pairToSet.getKey(), pairToSet.getValue());
+			context.focalPoint.level().setBlockAndUpdate(pairToSet.getKey(), pairToSet.getValue());
 		}
 
 		return null;

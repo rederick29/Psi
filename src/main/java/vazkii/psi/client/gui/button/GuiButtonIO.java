@@ -9,9 +9,9 @@
 package vazkii.psi.client.gui.button;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
@@ -36,13 +36,13 @@ public class GuiButtonIO extends Button {
 	}
 
 	@Override
-	public void renderWidget(@NotNull PoseStack ms, int x, int y, float pticks) {
+	public void renderWidget(@NotNull GuiGraphics guiGraphics, int x, int y, float pticks) {
 		if(active && !gui.takingScreenshot) {
 			boolean hover = x >= getX() && y >= getY() && x < getX() + width && y < getY() + height;
 
 			RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-			blit(ms, getX(), getY(), hover ? 186 : 174, out ? 169 : 181, width, height);
+			guiGraphics.blit(GuiProgrammer.texture, getX(), getY(), hover ? 186 : 174, out ? 169 : 181, width, height);
 
 			if(hover) {
 				String key = out ? "psimisc.export_to_clipboard" : "psimisc.import_from_clipboard";

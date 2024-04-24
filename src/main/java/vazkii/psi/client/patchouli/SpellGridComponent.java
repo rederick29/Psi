@@ -13,6 +13,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
@@ -56,20 +57,22 @@ public class SpellGridComponent implements ICustomComponent {
 	}
 
 	@Override
-	public void render(PoseStack ms, IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
+	public void render(GuiGraphics guiGraphics, IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
 		float scale = 0.65f;
+		PoseStack ms = guiGraphics.pose();
 
 		ms.pushPose();
 		ms.scale(scale, scale, 0f);
 
 		// Draw the Programmer BG
 		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+		guiGraphics.setColor(1F, 1F, 1F, 1F);
 		RenderSystem.setShaderTexture(0, texture);
-		context.getGui().blit(ms, 0, 0, 0, 0, 174, 184);
+		guiGraphics.blit(texture, 0, 0, 0, 0, 174, 184);
 
 		// Draw the name label and spell name
-		context.getGui().getMinecraft().font.drawShadow(ms, I18n.get("psimisc.name"), 7, 171, 0xFFFFFF);
-		context.getGui().getMinecraft().font.drawShadow(ms, spellName, 44, 170, 0xFFFFFF);
+		guiGraphics.drawString(context.getGui().getMinecraft().font, I18n.get("psimisc.name"), 7, 171, 0xFFFFFF, true);
+		guiGraphics.drawString(context.getGui().getMinecraft().font, spellName, 44, 170, 0xFFFFFF, true);
 
 		// Pad the spell pieces and draw them
 		ms.translate(7f, 7f, 0f);

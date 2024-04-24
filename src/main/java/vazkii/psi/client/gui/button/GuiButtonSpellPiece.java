@@ -12,6 +12,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
@@ -37,8 +38,9 @@ public class GuiButtonSpellPiece extends Button {
 	}
 
 	@Override
-	public void renderWidget(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float pTicks) {
 		if(active && visible) {
+			PoseStack ms = guiGraphics.pose();
 			boolean hover = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
 
 			MultiBufferSource.BufferSource buffers = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
@@ -50,7 +52,7 @@ public class GuiButtonSpellPiece extends Button {
 			RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
 			if(hover) {
 				piece.getTooltip(gui.tooltip);
-				blit(ms, getX(), getY(), 16, gui.ySize, 16, 16);
+				guiGraphics.blit(GuiProgrammer.texture, getX(), getY(), 16, gui.ySize, 16, 16);
 			}
 
 		}

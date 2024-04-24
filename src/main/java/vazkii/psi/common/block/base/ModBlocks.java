@@ -20,7 +20,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -65,18 +66,18 @@ public class ModBlocks {
 	@SubscribeEvent
 	public static void register(RegisterEvent evt) {
 		evt.register(ForgeRegistries.Keys.BLOCKS, helper -> {
-			cadAssembler = new BlockCADAssembler(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL).noOcclusion());
-			programmer = new BlockProgrammer(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL).noOcclusion());
-			conjured = new BlockConjured(Block.Properties.of(Material.GLASS).noLootTable().lightLevel(state -> state.getValue(BlockConjured.LIGHT) ? 15 : 0).noOcclusion().isValidSpawn(NO_SPAWN).isRedstoneConductor(NO_SUFFOCATION).isSuffocating(NO_SUFFOCATION).isViewBlocking(NO_SUFFOCATION));
-			psidustBlock = new Block(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL));
-			psimetalBlock = new Block(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL));
-			psigemBlock = new Block(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL));
-			psimetalPlateBlack = new Block(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL));
-			psimetalPlateBlackLight = new Block(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL).lightLevel((blockState) -> 15));
-			psimetalPlateWhite = new Block(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL));
-			psimetalPlateWhiteLight = new Block(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL).lightLevel((blockstate) -> 15));
-			psimetalEbony = new Block(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL));
-			psimetalIvory = new Block(Block.Properties.of(Material.METAL).strength(5, 10).sound(SoundType.METAL));
+			cadAssembler = new BlockCADAssembler(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL).noOcclusion());
+			programmer = new BlockProgrammer(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL).noOcclusion());
+			conjured = new BlockConjured(Block.Properties.of().instrument(NoteBlockInstrument.HAT).noLootTable().lightLevel(state -> state.getValue(BlockConjured.LIGHT) ? 15 : 0).noOcclusion().isValidSpawn(NO_SPAWN).isRedstoneConductor(NO_SUFFOCATION).isSuffocating(NO_SUFFOCATION).isViewBlocking(NO_SUFFOCATION));
+			psidustBlock = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psimetalBlock = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psigemBlock = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psimetalPlateBlack = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psimetalPlateBlackLight = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL).lightLevel((blockState) -> 15));
+			psimetalPlateWhite = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psimetalPlateWhiteLight = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL).lightLevel((blockstate) -> 15));
+			psimetalEbony = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psimetalIvory = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
 
 			helper.register(new ResourceLocation(LibMisc.MOD_ID, LibBlockNames.CAD_ASSEMBLER), cadAssembler);
 			helper.register(new ResourceLocation(LibMisc.MOD_ID, LibBlockNames.PROGRAMMER), programmer);

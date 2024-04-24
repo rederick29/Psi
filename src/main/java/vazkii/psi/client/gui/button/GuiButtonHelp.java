@@ -9,9 +9,9 @@
 package vazkii.psi.client.gui.button;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
@@ -30,11 +30,11 @@ public class GuiButtonHelp extends Button {
 	}
 
 	@Override
-	public void renderWidget(PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float pTicks) {
 		if(!gui.takingScreenshot) {
 			boolean overHelp = mouseX > getX() && mouseY > getY() && mouseX < getX() + 12 && mouseY < getY() + 12;
 			RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
-			blit(ms, getX(), getY(), gui.xSize + (overHelp ? 12 : 0), gui.ySize + 9, 12, 12);
+			guiGraphics.blit(GuiProgrammer.texture, getX(), getY(), gui.xSize + (overHelp ? 12 : 0), gui.ySize + 9, 12, 12);
 			if(overHelp && !Screen.hasAltDown()) {
 				gui.tooltip.add(Component.translatable("psimisc.programmer_help"));
 				String ctrl = I18n.get(Minecraft.ON_OSX ? "psimisc.ctrl_mac" : "psimisc.ctrl_windows");

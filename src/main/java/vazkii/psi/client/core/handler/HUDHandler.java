@@ -13,7 +13,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -108,7 +108,8 @@ public final class HUDHandler {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static void drawPsiBar(PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+	public static void drawPsiBar(GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
+		PoseStack poseStack = guiGraphics.pose();
 		Minecraft mc = Minecraft.getInstance();
 		ItemStack cadStack = PsiAPI.getPlayerCAD(mc.player);
 
@@ -150,7 +151,7 @@ public final class HUDHandler {
 
 		RenderSystem.enableBlend();
 		RenderSystem.setShaderTexture(0, psiBar);
-		GuiComponent.blit(poseStack, x, y, 0, 0, width, height, 64, 256);
+		guiGraphics.blit(psiBar, x, y, 0, 0, width, height, 64, 256);
 
 		x += 8;
 		y += 26;
@@ -184,7 +185,7 @@ public final class HUDHandler {
 			y = origY + v;
 
 			usePsiBarShader(a, d.shatter, data.overflowed);
-			GuiComponent.blit(poseStack, x, y, 32, v, width, height, 64, 256);
+			guiGraphics.blit(psiBar, x, y, 32, v, width, height, 64, 256);
 		}
 
 		float textY = origY;
@@ -206,7 +207,7 @@ public final class HUDHandler {
 
 		RenderSystem.setShaderColor(r, g, b, 1F);
 		usePsiBarShader(1F, false, data.overflowed);
-		GuiComponent.blit(poseStack, x, y, 32, v, width, height, 64, 256);
+		guiGraphics.blit(psiBar, x, y, 32, v, width, height, 64, 256);
 
 		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
@@ -235,14 +236,14 @@ public final class HUDHandler {
 				PsiRenderHelper.g(color) / 255F,
 				PsiRenderHelper.b(color) / 255F, 1F);
 
-		GuiComponent.blit(poseStack, x - offBar, -2, 0, 140, width, height, 64, 256);
-		mc.font.drawShadow(poseStack, s1, x - offStr1, -11, 0xFFFFFF);
+		guiGraphics.blit(psiBar, x - offBar, -2, 0, 140, width, height, 64, 256);
+		guiGraphics.drawString(mc.font, s1, x - offStr1, -11, 0xFFFFFF, true);
 		poseStack.popPose();
 
 		if(storedPsi != -1) {
 			poseStack.pushPose();
 			poseStack.translate(0F, Math.max(textY + 3, origY + 100), 0F);
-			mc.font.drawShadow(poseStack, s2, x - offStr2, 0, 0xFFFFFF);
+			guiGraphics.drawString(mc.font, s2, x - offStr2, 0, 0xFFFFFF, true);
 			poseStack.popPose();
 		}
 		RenderSystem.disableBlend();
@@ -250,7 +251,8 @@ public final class HUDHandler {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private static void renderSocketableEquippedName(PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+	private static void renderSocketableEquippedName(GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
+		PoseStack poseStack = guiGraphics.pose();
 		Minecraft mc = Minecraft.getInstance();
 		ItemStack stack = mc.player.getItemInHand(InteractionHand.MAIN_HAND);
 		if(!ISocketable.isSocketable(stack)) {
@@ -277,20 +279,22 @@ public final class HUDHandler {
 				y += 14;
 			}
 
-			mc.font.drawShadow(poseStack, name, x, y, color);
+			guiGraphics.drawString(mc.font, name, x, y, color, true);
 
 			int w = mc.font.width(name);
 			poseStack.pushPose();
 			poseStack.translate(x + w, y - 6, 0);
 			poseStack.scale(alpha / 255F, 1F, 1);
-			PsiRenderHelper.transferMsToGl(poseStack, () -> mc.getItemRenderer().renderGuiItem(poseStack, bullet, 0, 0));
+			// TODO(rederick29): is this helper still required in 1.20?
+			PsiRenderHelper.transferMsToGl(poseStack, () -> guiGraphics.renderFakeItem(bullet, 0, 0));
 			poseStack.popPose();
 		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private static void renderRemainingItems(PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+	private static void renderRemainingItems(GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
 		if(remainingTime > 0 && !remainingDisplayStack.isEmpty()) {
+			PoseStack poseStack = guiGraphics.pose();
 			int pos = maxRemainingTicks - remainingTime;
 			Minecraft mc = Minecraft.getInstance();
 			int remainingLeaveTicks = 20;
@@ -305,7 +309,8 @@ public final class HUDHandler {
 			poseStack.pushPose();
 			poseStack.translate(xp, y, 0F);
 			poseStack.scale(alpha, 1F, 1F);
-			PsiRenderHelper.transferMsToGl(poseStack, () -> mc.getItemRenderer().renderAndDecorateItem(poseStack, remainingDisplayStack, 0, 0));
+			// TODO(rederick29): is this helper still required in 1.20?
+			PsiRenderHelper.transferMsToGl(poseStack, () -> guiGraphics.renderFakeItem(remainingDisplayStack, 0, 0));
 			poseStack.scale(1F / alpha, 1F, 1F);
 			poseStack.translate(-xp, -y, 0F);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
@@ -328,23 +333,23 @@ public final class HUDHandler {
 			}
 
 			int color = 0x00FFFFFF | (int) (alpha * 0xFF) << 24;
-			mc.font.drawShadow(poseStack, text, x + 20, y + 6, color);
+			guiGraphics.drawString(mc.font, text, x + 20, y + 6, color, true);
 
 			poseStack.popPose();
 		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private static void renderHUDItem(PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
+	private static void renderHUDItem(GuiGraphics guiGraphics, float partialTicks, int screenWidth, int screenHeight) {
 		Minecraft mc = Minecraft.getInstance();
 		ItemStack stack = mc.player.getMainHandItem();
 		if(!stack.isEmpty() && stack.getItem() instanceof IHUDItem) {
-			((IHUDItem) stack.getItem()).drawHUD(poseStack, partialTicks, screenWidth, screenHeight, stack);
+			((IHUDItem) stack.getItem()).drawHUD(guiGraphics, partialTicks, screenWidth, screenHeight, stack);
 		}
 
 		stack = mc.player.getOffhandItem();
 		if(!stack.isEmpty() && stack.getItem() instanceof IHUDItem) {
-			((IHUDItem) stack.getItem()).drawHUD(poseStack, partialTicks, screenWidth, screenHeight, stack);
+			((IHUDItem) stack.getItem()).drawHUD(guiGraphics, partialTicks, screenWidth, screenHeight, stack);
 		}
 	}
 
@@ -358,7 +363,7 @@ public final class HUDHandler {
 		int count = 0;
 		for(int i = 0; i < player.getInventory().getContainerSize(); i++) {
 			ItemStack stack = player.getInventory().getItem(i);
-			if(!stack.isEmpty() && (pattern == null ? ItemStack.isSame(displayStack, stack) : pattern.matcher(stack.getDescriptionId()).find())) {
+			if(!stack.isEmpty() && (pattern == null ? ItemStack.isSameItem(displayStack, stack) : pattern.matcher(stack.getDescriptionId()).find())) {
 				count += stack.getCount();
 			}
 		}

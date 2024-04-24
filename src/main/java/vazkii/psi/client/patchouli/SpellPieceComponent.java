@@ -11,6 +11,7 @@ package vazkii.psi.client.patchouli;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 
@@ -39,8 +40,10 @@ public class SpellPieceComponent implements ICustomComponent {
 	}
 
 	@Override
-	public void render(PoseStack ms, IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
+	public void render(GuiGraphics guiGraphics, IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
 		MultiBufferSource.BufferSource buffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+		PoseStack ms = guiGraphics.pose();
+
 		ms.pushPose();
 		ms.translate(x, y, 0);
 		piece.draw(ms, buffer, 0xF000F0);

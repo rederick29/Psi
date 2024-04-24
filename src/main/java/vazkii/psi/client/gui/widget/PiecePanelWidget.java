@@ -11,6 +11,7 @@ package vazkii.psi.client.gui.widget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -62,24 +63,24 @@ public class PiecePanelWidget extends AbstractWidget implements Renderable, GuiE
 	}
 
 	@Override
-	public void renderWidget(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float pTicks) {
 		if(panelEnabled) {
 			RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
 
-			fill(ms, getX(), getY(), getX() + width, getY() + height, 0x88000000);
+			guiGraphics.fill(getX(), getY(), getX() + width, getY() + height, 0x88000000);
 
 			if(!visibleButtons.isEmpty()) {
 				Button button = visibleButtons.get(Math.max(0, Math.min(panelCursor + (page * PIECES_PER_PAGE), visibleButtons.size() - 1)));
 				int panelPieceX = button.getX();
 				int panelPieceY = button.getY();
-				fill(ms, panelPieceX - 1, panelPieceY - 1, panelPieceX + 17, panelPieceY + 17, 0x559999FF);
+				guiGraphics.fill(panelPieceX - 1, panelPieceY - 1, panelPieceX + 17, panelPieceY + 17, 0x559999FF);
 			}
 
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);;
-			blit(ms, searchField.getX() - 14, searchField.getY() - 2, 0, parent.ySize + 16, 12, 12);
+			guiGraphics.blit(GuiProgrammer.texture, searchField.getX() - 14, searchField.getY() - 2, 0, parent.ySize + 16, 12, 12);
 
 			String s = Math.min(Math.max(getPageCount(), 1), page + 1) + "/" + Math.max(getPageCount(), 1);
-			parent.getMinecraft().font.drawShadow(ms, s, getX() + width / 2f - parent.getMinecraft().font.width(s) / 2f, getY() + height - 12, 0xFFFFFF);
+			guiGraphics.drawString(parent.getMinecraft().font, s, getX() + width / 2f - parent.getMinecraft().font.width(s) / 2f, getY() + height - 12, 0xFFFFFF, true);
 		}
 	}
 

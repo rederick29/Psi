@@ -102,7 +102,7 @@ public class PlayerDataHandler {
 			return new PlayerData();
 		}
 
-		Map<Player, PlayerData> dataMap = player.level.isClientSide ? remotePlayerData : playerData;
+		Map<Player, PlayerData> dataMap = player.level().isClientSide ? remotePlayerData : playerData;
 
 		PlayerData data = dataMap.computeIfAbsent(player, PlayerData::new);
 		if(data.playerWR != null && data.playerWR.get() != player) {
@@ -192,7 +192,7 @@ public class PlayerDataHandler {
 
 		@SubscribeEvent
 		public static void onEntityJump(LivingJumpEvent event) {
-			if(event.getEntity() instanceof Player && event.getEntity().level.isClientSide && !event.getEntity().isSpectator()) {
+			if(event.getEntity() instanceof Player && event.getEntity().level().isClientSide && !event.getEntity().isSpectator()) {
 				Player player = (Player) event.getEntity();
 				PsiArmorEvent.post(new PsiArmorEvent(player, PsiArmorEvent.JUMP));
 				MessageRegister.HANDLER.sendToServer(new MessageTriggerJumpSpell());
@@ -380,7 +380,7 @@ public class PlayerDataHandler {
 					}
 
 					if(lastTickLoopcastStack != null) {
-						if(!ItemStack.isSame(lastTickLoopcastStack, stackInHand) ||
+						if(!ItemStack.isSameItem(lastTickLoopcastStack, stackInHand) ||
 								!ISocketable.isSocketable(lastTickLoopcastStack)) {
 							stopLoopcast();
 							break loopcast;
@@ -511,7 +511,7 @@ public class PlayerDataHandler {
 							riding = riding.getVehicle();
 						}
 
-						if(player.level.isClientSide) {
+						if(player.level().isClientSide) {
 							for(int i = 0; i < 5; i++) {
 								double spread = 0.6;
 

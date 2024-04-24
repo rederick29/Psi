@@ -173,7 +173,7 @@ public class EntitySpellCircle extends Entity implements ISpellImmune {
 			}
 		}
 
-		if(level.isClientSide) {
+		if(level().isClientSide) {
 			ItemStack colorizer = entityData.get(COLORIZER_DATA);
 			int colorVal = Psi.proxy.getColorForColorizer(colorizer);
 

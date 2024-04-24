@@ -11,6 +11,7 @@ package vazkii.psi.client.gui.button;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
@@ -49,7 +50,7 @@ public class GuiButtonSideConfig extends Button {
 	}
 
 	@Override
-	public void renderWidget(PoseStack ms, int x, int y, float pTicks) {
+	public void renderWidget(GuiGraphics guiGraphics, int x, int y, float pTicks) {
 		if(active && visible && !gui.takingScreenshot) {
 			int minX = getX();
 			int minY = getY();

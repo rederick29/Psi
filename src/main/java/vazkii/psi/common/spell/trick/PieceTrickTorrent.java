@@ -15,10 +15,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.level.BlockEvent;
@@ -71,7 +71,7 @@ public class PieceTrickTorrent extends PieceTrick {
 		if(placeEvent.isCanceled()) {
 			return null;
 		}
-		return placeWater(context.caster, context.focalPoint.level, pos);
+		return placeWater(context.caster, context.focalPoint.level(), pos);
 	}
 
 	// [VanillaCopy] BucketItem.tryPlaceContainingLiquid because buckets are dumb
@@ -80,7 +80,6 @@ public class PieceTrickTorrent extends PieceTrick {
 			return false;
 		}
 		BlockState blockstate = worldIn.getBlockState(pos);
-		Material material = blockstate.getMaterial();
 		boolean flag = blockstate.canBeReplaced(Fluids.WATER);
 		if(blockstate.isAir() || flag || blockstate.getBlock() instanceof LiquidBlockContainer && ((LiquidBlockContainer) blockstate.getBlock()).canPlaceLiquid(worldIn, pos, blockstate, Fluids.WATER)) {
 			if(worldIn.dimensionType().ultraWarm()) {
@@ -97,7 +96,7 @@ public class PieceTrickTorrent extends PieceTrick {
 					worldIn.playSound(playerIn, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
 				}
 			} else {
-				if(!worldIn.isClientSide && flag && !material.isLiquid()) {
+				if(!worldIn.isClientSide && flag && !(blockstate == Blocks.WATER.defaultBlockState() || blockstate == Blocks.LAVA.defaultBlockState())) {
 					worldIn.destroyBlock(pos, true);
 				}
 

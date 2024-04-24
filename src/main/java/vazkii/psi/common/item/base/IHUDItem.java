@@ -8,8 +8,7 @@
  */
 package vazkii.psi.common.item.base;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -17,6 +16,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public interface IHUDItem {
 
 	@OnlyIn(Dist.CLIENT)
-	void drawHUD(PoseStack ms, float partTicks, int screenWidth, int screenHeight, ItemStack stack);
+	void drawHUD(GuiGraphics guiGraphics, float partTicks, int screenWidth, int screenHeight, ItemStack stack);
 
 }

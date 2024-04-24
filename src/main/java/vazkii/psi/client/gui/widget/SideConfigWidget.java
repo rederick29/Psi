@@ -13,6 +13,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -46,15 +47,15 @@ public class SideConfigWidget extends AbstractWidget {
 	}
 
 	@Override
-	public void renderWidget(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float pTicks) {
 		SpellPiece piece = null;
 		if(SpellGrid.exists(GuiProgrammer.selectedX, GuiProgrammer.selectedY)) {
 			piece = parent.spell.grid.gridData[GuiProgrammer.selectedX][GuiProgrammer.selectedY];
 		}
 		if(configEnabled && !parent.takingScreenshot) {
-			blit(ms, parent.left - 81, parent.top + 55, parent.xSize, 30, 81, 115);
+			guiGraphics.blit(GuiProgrammer.texture, parent.left - 81, parent.top + 55, parent.xSize, 30, 81, 115);
 			String configStr = I18n.get("psimisc.config");
-			parent.getMinecraft().font.draw(ms, configStr, parent.left - parent.getMinecraft().font.width(configStr) - 2, parent.top + 45, 0xFFFFFF);
+			guiGraphics.drawString(parent.getMinecraft().font, configStr, parent.left - parent.getMinecraft().font.width(configStr) - 2, parent.top + 45, 0xFFFFFF, true);
 
 			int i = 0;
 			if(piece != null) {
@@ -71,14 +72,14 @@ public class SideConfigWidget extends AbstractWidget {
 
 					RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 					RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
-					blit(ms, x + 50, y - 8, parent.xSize, 145, 24, 24);
+					guiGraphics.blit(GuiProgrammer.texture, x + 50, y - 8, parent.xSize, 145, 24, 24);
 
 					String localized = I18n.get(s);
 					if(i == param) {
 						localized = ChatFormatting.UNDERLINE + localized;
 					}
 
-					parent.getMinecraft().font.draw(ms, localized, x, y, 0xFFFFFF);
+					guiGraphics.drawString(parent.getMinecraft().font, localized, x, y, 0xFFFFFF, true);
 
 					i++;
 				}

@@ -20,7 +20,7 @@ import com.mojang.datafixers.util.Either;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ComponentPath;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
@@ -75,11 +75,7 @@ import vazkii.psi.common.spell.SpellCompiler;
 import vazkii.psi.common.spell.other.PieceConnector;
 import vazkii.psi.mixin.client.AccessorRenderState;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GuiProgrammer extends Screen {
@@ -300,7 +296,8 @@ public class GuiProgrammer extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		PoseStack ms = guiGraphics.pose();
 		if(programmer != null && (programmer.getLevel().getBlockEntity(programmer.getBlockPos()) != programmer || !programmer.canPlayerInteract(getMinecraft().player))) {
 			getMinecraft().setScreen(null);
 			return;
@@ -310,12 +307,13 @@ public class GuiProgrammer extends Screen {
 		int color = Psi.magical ? 0 : 0xFFFFFF;
 
 		ms.pushPose();
-		renderBackground(ms);
+		renderBackground(guiGraphics);
 
 		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+		guiGraphics.setColor(1F, 1F, 1F, 1F);
 		RenderSystem.setShaderTexture(0, texture);
 
-		blit(ms, left, top, 0, 0, xSize, ySize);
+		guiGraphics.blit(texture, left, top, 0, 0, xSize, ySize);
 
 		//Currently selected piece
 		SpellPiece piece = null;
@@ -340,7 +338,7 @@ public class GuiProgrammer extends Screen {
 		compileResult.right().ifPresent(ex -> {
 			Pair<Integer, Integer> errorPos = ex.location;
 			if(errorPos != null && errorPos.getRight() != -1 && errorPos.getLeft() != -1) {
-				font.drawShadow(ms, "!!", errorPos.getLeft() * 18 + 12, errorPos.getRight() * 18 + 8, 0xFF0000);
+				guiGraphics.drawString(font, "!!", errorPos.getLeft() * 18 + 12, errorPos.getRight() * 18 + 8, 0xFF0000, true);
 			}
 		});
 		ms.popPose();
@@ -349,7 +347,7 @@ public class GuiProgrammer extends Screen {
 		RenderSystem.setShaderTexture(0, texture);
 
 		if(selectedX != -1 && selectedY != -1 && !takingScreenshot) {
-			blit(ms, gridLeft + selectedX * 18, gridTop + selectedY * 18, 32, ySize, 16, 16);
+			guiGraphics.blit(texture, gridLeft + selectedX * 18, gridTop + selectedY * 18, 32, ySize, 16, 16);
 		}
 
 		if(hasAltDown()) {
@@ -364,18 +362,18 @@ public class GuiProgrammer extends Screen {
 			Set<String> addons = spell.getPieceNamespaces().stream().filter(namespace -> !namespace.equals("psi")).collect(Collectors.toSet());
 			if(!addons.isEmpty()) {
 				String requiredAddons = ChatFormatting.GREEN + "Required Addons:";
-				font.drawShadow(ms, requiredAddons, left - font.width(requiredAddons) - 5, top + 40, 0xFFFFFF);
+				guiGraphics.drawString(font, requiredAddons, left - font.width(requiredAddons) - 5, top + 40, 0xFFFFFF, true);
 				int i = 1;
 				for(String addon : addons) {
 					if(ModList.get().getModContainerById(addon).isPresent()) {
 						String modName = ModList.get().getModContainerById(addon).get().getModInfo().getDisplayName();
-						font.drawShadow(ms, "* " + modName, left - font.width(requiredAddons) - 5, top + 40 + 10 * i, 0xFFFFFF);
+						guiGraphics.drawString(font, "* " + modName, left - font.width(requiredAddons) - 5, top + 40 + 10 * i, 0xFFFFFF, true);
 						i++;
 					}
 				}
 			}
 			String version = "Psi " + ModList.get().getModContainerById("psi").get().getModInfo().getVersion().toString();
-			font.drawShadow(ms, version, left + xSize / 2f - font.width(version) / 2f, top - 22, 0xFFFFFF);
+			guiGraphics.drawString(font, version, left + xSize / 2f - font.width(version) / 2f, top - 22, 0xFFFFFF, true);
 		}
 
 		SpellPiece pieceAtCursor = null;
@@ -388,9 +386,9 @@ public class GuiProgrammer extends Screen {
 
 			if(!takingScreenshot) {
 				if(cursorX == selectedX && cursorY == selectedY) {
-					blit(ms, gridLeft + cursorX * 18, gridTop + cursorY * 18, 16, ySize, 8, 16);
+					guiGraphics.blit(texture, gridLeft + cursorX * 18, gridTop + cursorY * 18, 16, ySize, 8, 16);
 				} else {
-					blit(ms, gridLeft + cursorX * 18, gridTop + cursorY * 18, 16, ySize, 16, 16);
+					guiGraphics.blit(texture, gridLeft + cursorX * 18, gridTop + cursorY * 18, 16, ySize, 16, 16);
 				}
 			}
 		}
@@ -401,18 +399,17 @@ public class GuiProgrammer extends Screen {
 			int topYText = topY;
 			if(spectator) {
 				String spectator = ChatFormatting.RED + I18n.get("psimisc.spectator");
-				font.drawShadow(ms, spectator, left + xSize / 2f - font.width(spectator) / 2f, topYText, 0xFFFFFF);
+				guiGraphics.drawString(font, spectator, left + xSize / 2f - font.width(spectator) / 2f, topYText, 0xFFFFFF, true);
 				topYText -= 10;
 			}
 			if(piece != null) {
 				String pieceName = I18n.get(piece.getUnlocalizedName());
-				font.drawShadow(ms, pieceName, left + xSize / 2f - font.width(pieceName) / 2f, topYText, 0xFFFFFF);
+				guiGraphics.drawString(font, pieceName, left + xSize / 2f - font.width(pieceName) / 2f, topYText, 0xFFFFFF, true);
 				topYText -= 10;
 			}
 			if(LibMisc.BETA_TESTING) {
 				String betaTest = ChatFormatting.GOLD + I18n.get("psimisc.wip");
-				font.drawShadow(ms, betaTest, left + xSize / 2f - font.width(betaTest) / 2f, topYText, 0xFFFFFF);
-
+				guiGraphics.drawString(font, betaTest, left + xSize / 2f - font.width(betaTest) / 2f, topYText, 0xFFFFFF, true);
 			}
 
 			String coords;
@@ -421,24 +418,24 @@ public class GuiProgrammer extends Screen {
 			} else {
 				coords = I18n.get("psimisc.programmer_coords_no_cursor", convertIntToLetter(selectedX + 1), selectedY + 1);
 			}
-			font.draw(ms, coords, left + 4, topY + ySize + 24, 0x44FFFFFF);
+			guiGraphics.drawString(font, coords, left + 4, topY + ySize + 24, 0x44FFFFFF, false);
 			String version = "Psi " + ModList.get().getModContainerById("psi").get().getModInfo().getVersion().toString();
-			font.drawShadow(ms, version, left + xSize / 2f - font.width(version) / 2f, topY + ySize + 24 + font.wordWrapHeight(coords, font.width(coords)) + 5, 0x44FFFFFF);
+			guiGraphics.drawString(font, version, left + xSize / 2f - font.width(version) / 2f, topY + ySize + 24 + font.wordWrapHeight(coords, font.width(coords)) + 5, 0x44FFFFFF, true);
 		}
 
 		if(Psi.magical) {
-			font.draw(ms, I18n.get("psimisc.name"), left + padLeft, spellNameField.getY() + 1, color);
+			guiGraphics.drawString(font, I18n.get("psimisc.name"), left + padLeft, spellNameField.getY() + 1, color, false);
 		} else {
-			font.drawShadow(ms, I18n.get("psimisc.name"), left + padLeft, spellNameField.getY() + 1, color);
+			guiGraphics.drawString(font, I18n.get("psimisc.name"), left + padLeft, spellNameField.getY() + 1, color, true);
 		}
 
 		//Add here comment
 		if(commentEnabled) {
 			String enterCommit = I18n.get("psimisc.enter_commit");
-			font.drawShadow(ms, enterCommit, left + xSize / 2f - font.width(enterCommit) / 2f, commentField.getY() + 24, 0xFFFFFF);
+			guiGraphics.drawString(font, enterCommit, left + xSize / 2f - font.width(enterCommit) / 2f, commentField.getY() + 24, 0xFFFFFF, true);
 
 			String semicolonLine = I18n.get("psimisc.semicolon_line");
-			font.drawShadow(ms, semicolonLine, left + xSize / 2f - font.width(semicolonLine) / 2f, commentField.getY() + 34, 0xFFFFFF);
+			guiGraphics.drawString(font, semicolonLine, left + xSize / 2f - font.width(semicolonLine) / 2f, commentField.getY() + 34, 0xFFFFFF, true);
 		}
 
 		List<Component> legitTooltip = null;
@@ -450,19 +447,19 @@ public class GuiProgrammer extends Screen {
 			tooltip = legitTooltip;
 		}
 
-		super.render(ms, mouseX, mouseY, partialTicks);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 		if(!takingScreenshot && tooltip != null && !tooltip.isEmpty() && pieceAtCursor == null && mouseMoved) {
-			this.renderComponentTooltip(ms, tooltip, mouseX, mouseY);
+			guiGraphics.renderTooltip(getMinecraft().font, tooltip, Optional.empty(), mouseX, mouseY);
 		}
 		if(!takingScreenshot && pieceAtCursor != null && mouseMoved) {
 			if(tooltip != null && !tooltip.isEmpty()) {
-				pieceAtCursor.drawTooltip(ms, mouseX, mouseY, tooltip, this);
+				pieceAtCursor.drawTooltip(guiGraphics, mouseX, mouseY, tooltip, this);
 			}
 
 			if(comment != null && !comment.isEmpty()) {
 				List<Component> commentList = Arrays.stream(comment.split(";")).map(Component::literal).collect(Collectors.toList());
-				pieceAtCursor.drawCommentText(ms, mouseX, mouseY, commentList, this);
+				pieceAtCursor.drawCommentText(guiGraphics, mouseX, mouseY, commentList, this);
 			}
 		}
 

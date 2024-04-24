@@ -12,6 +12,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -40,11 +41,11 @@ public class StatusWidget extends AbstractWidget {
 	}
 
 	@Override
-	public void renderWidget(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float pTicks) {
 		RenderSystem.setShaderColor(1f, 1f, 1f, 1F);
 		RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
-		blit(ms, parent.left - 48, parent.top + 5, parent.xSize, 0, 48, 30);
-		blit(ms, parent.left - 16, parent.top + 13, parent.compileResult.right().isPresent() ? 12 : 0, parent.ySize + 28, 12, 12);
+		guiGraphics.blit(GuiProgrammer.texture, parent.left - 48, parent.top + 5, parent.xSize, 0, 48, 30);
+		guiGraphics.blit(GuiProgrammer.texture, parent.left - 16, parent.top + 13, parent.compileResult.right().isPresent() ? 12 : 0, parent.ySize + 28, 12, 12);
 
 		if(mouseX > parent.left - 16 - 1 && mouseY > parent.top + 13 - 1 && mouseX < parent.left - 16 + 13 && mouseY < parent.top + 13 + 13) {
 			if(parent.compileResult.right().isPresent()) {
@@ -66,7 +67,8 @@ public class StatusWidget extends AbstractWidget {
 			int cadX = parent.left - 42;
 			int cadY = parent.top + 12;
 
-			PsiRenderHelper.transferMsToGl(ms, () -> parent.getMinecraft().getItemRenderer().renderAndDecorateItem(ms, cad, cadX, cadY));
+			// TODO(rederick29): is this helper still needed in 1.20?
+			PsiRenderHelper.transferMsToGl(guiGraphics.pose(), () -> guiGraphics.renderFakeItem(cad, cadX, cadY));
 
 			if(mouseX > cadX && mouseY > cadY && mouseX < cadX + 16 && mouseY < cadY + 16) {
 				parent.tooltip.addAll(cad.getTooltipLines(parent.getMinecraft().player, parent.tooltipFlag));

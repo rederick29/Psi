@@ -9,8 +9,8 @@
 package vazkii.psi.client.gui.button;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
@@ -34,13 +34,13 @@ public class GuiButtonPage extends Button {
 	}
 
 	@Override
-	public void renderWidget(PoseStack ms, int x, int y, float pTicks) {
+	public void renderWidget(GuiGraphics guiGraphics, int x, int y, float pTicks) {
 		if(active) {
 			boolean hover = x >= getX() && y >= getY() && x < getX() + width && y < getY() + height;
 
 			RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-			blit(ms, getX(), getY(), hover ? 216 : 198, right ? 145 : 155, width, height);
+			guiGraphics.blit(GuiProgrammer.texture, getX(), getY(), hover ? 216 : 198, right ? 145 : 155, width, height);
 
 			if(hover) {
 				gui.tooltip.add(Component.translatable(right ? "psimisc.next_page" : "psimisc.prev_page"));

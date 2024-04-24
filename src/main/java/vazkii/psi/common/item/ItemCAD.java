@@ -317,7 +317,7 @@ public class ItemCAD extends Item implements ICAD {
 
 	@Override
 	public boolean craft(ItemStack cad, Player player, PieceCraftingTrick craftingTrick) {
-		Level world = player.level;
+		Level world = player.level();
 		if(world.isClientSide) {
 			return false;
 		}
@@ -339,7 +339,7 @@ public class ItemCAD extends Item implements ICAD {
 			Optional<ITrickRecipe> recipe = world.getRecipeManager().getRecipeFor(ModCraftingRecipes.TRICK_RECIPE_TYPE, inv, world)
 					.filter(predicate);
 			if(recipe.isPresent()) {
-				ItemStack outCopy = recipe.get().getResultItem(player.getLevel().registryAccess()).copy();
+				ItemStack outCopy = recipe.get().getResultItem(player.level().registryAccess()).copy();
 				int count = stack.getCount() * outCopy.getCount();
 				while(count > 64) {
 					int dropCount = world.getRandom().nextInt(32) + 32;
@@ -651,7 +651,7 @@ public class ItemCAD extends Item implements ICAD {
 
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-		return !oldStack.sameItem(newStack);
+		return !ItemStack.isSameItem(oldStack, newStack);
 	}
 
 }

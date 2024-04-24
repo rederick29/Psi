@@ -64,7 +64,7 @@ public class ContainerCADAssembler extends AbstractContainerMenu {
 
 	public static ContainerCADAssembler fromNetwork(int windowId, Inventory playerInventory, FriendlyByteBuf buf) {
 		BlockPos pos = buf.readBlockPos();
-		return new ContainerCADAssembler(windowId, playerInventory, (TileCADAssembler) playerInventory.player.level.getBlockEntity(pos));
+		return new ContainerCADAssembler(windowId, playerInventory, (TileCADAssembler) playerInventory.player.level().getBlockEntity(pos));
 	}
 
 	public ContainerCADAssembler(int windowId, Inventory playerInventory, TileCADAssembler assembler) {

@@ -15,6 +15,7 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.gui.GuiGraphics;
 import org.joml.Matrix4f;
 
 import net.minecraft.ChatFormatting;
@@ -469,16 +470,16 @@ public abstract class SpellPiece {
 	 * Draws this piece's tooltip.
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public void drawTooltip(PoseStack ms, int tooltipX, int tooltipY, List<Component> tooltip, Screen screen) {
-		PsiAPI.internalHandler.renderTooltip(ms, tooltipX, tooltipY, tooltip, 0x505000ff, 0xf0100010, screen.width, screen.height);
+	public void drawTooltip(GuiGraphics guiGraphics, int tooltipX, int tooltipY, List<Component> tooltip, Screen screen) {
+		PsiAPI.internalHandler.renderTooltip(guiGraphics, tooltipX, tooltipY, tooltip, 0x505000ff, 0xf0100010, screen.width, screen.height);
 	}
 
 	/**
 	 * Draws this piece's comment tooltip.
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public void drawCommentText(PoseStack ms, int tooltipX, int tooltipY, List<Component> commentText, Screen screen) {
-		PsiAPI.internalHandler.renderTooltip(ms, tooltipX, tooltipY - 9 - commentText.size() * 10, commentText, 0x5000a000, 0xf0001e00, screen.width, screen.height);
+	public void drawCommentText(GuiGraphics guiGraphics, int tooltipX, int tooltipY, List<Component> commentText, Screen screen) {
+		PsiAPI.internalHandler.renderTooltip(guiGraphics, tooltipX, tooltipY - 9 - commentText.size() * 10, commentText, 0x5000a000, 0xf0001e00, screen.width, screen.height);
 	}
 
 	@OnlyIn(Dist.CLIENT)

@@ -13,6 +13,8 @@ import com.mojang.blaze3d.vertex.Tesselator;
 
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 
 import vazkii.psi.api.spell.SpellPiece;
@@ -26,7 +28,8 @@ public class DrawablePiece implements IDrawableStatic {
 	}
 
 	@Override
-	public void draw(PoseStack ms, int xOffset, int yOffset, int maskTop, int maskBottom, int maskLeft, int maskRight) {
+	public void draw(GuiGraphics guiGraphics, int xOffset, int yOffset, int maskTop, int maskBottom, int maskLeft, int maskRight) {
+		PoseStack ms = guiGraphics.pose();
 		ms.pushPose();
 		ms.translate(xOffset, yOffset, 0);
 
@@ -49,7 +52,7 @@ public class DrawablePiece implements IDrawableStatic {
 	}
 
 	@Override
-	public void draw(PoseStack ms, int xOff, int yOff) {
-		draw(ms, xOff, yOff, 0, 0, 0, 0);
+	public void draw(GuiGraphics guiGraphics, int xOff, int yOff) {
+		draw(guiGraphics, xOff, yOff, 0, 0, 0, 0);
 	}
 }

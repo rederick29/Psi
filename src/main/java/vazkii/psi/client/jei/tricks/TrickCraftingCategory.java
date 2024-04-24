@@ -20,6 +20,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -82,15 +83,15 @@ public class TrickCraftingCategory implements IRecipeCategory<ITrickRecipe> {
 	}
 
 	@Override
-	public void draw(ITrickRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack poseStack, double mouseX, double mouseY) {
+	public void draw(ITrickRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
 		if(recipe.getPiece() != null) {
 			IDrawable trickIcon = trickIcons.computeIfAbsent(recipe.getPiece().registryKey,
 					key -> new DrawablePiece(recipe.getPiece()));
 
-			trickIcon.draw(poseStack, trickX, trickY);
+			trickIcon.draw(guiGraphics, trickX, trickY);
 
 			if(onTrick(mouseX, mouseY)) {
-				programmerHover.draw(poseStack, trickX, trickY);
+				programmerHover.draw(guiGraphics, trickX, trickY);
 			}
 		}
 	}
