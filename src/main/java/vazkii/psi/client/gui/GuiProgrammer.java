@@ -20,6 +20,7 @@ import com.mojang.datafixers.util.Either;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ComponentPath;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
@@ -634,7 +635,7 @@ public class GuiProgrammer extends Screen {
 			}
 		}
 		if(spellNameField.isFocused() && keyCode == GLFW.GLFW_KEY_TAB) {
-			spellNameField.setFocus(false);
+			spellNameField.setFocused(false);
 			return true;
 		}
 		if(!spellNameField.isFocused() && !panelWidget.panelEnabled && !commentEnabled) {
@@ -664,7 +665,7 @@ public class GuiProgrammer extends Screen {
 				}
 				break;
 			case GLFW.GLFW_KEY_TAB:
-				spellNameField.setFocus(!spellNameField.isFocused());
+				spellNameField.setFocused(!spellNameField.isFocused());
 				setInitialFocus(spellNameField);
 				return true;
 			case GLFW.GLFW_KEY_UP:
@@ -830,11 +831,11 @@ public class GuiProgrammer extends Screen {
 			case GLFW.GLFW_KEY_D:
 				if(piece != null && hasControlDown()) {
 					commentField.setVisible(true);
-					commentField.setFocus(true);
+					commentField.setFocused(true);
 					commentField.setEditable(true);
 					spellNameField.setEditable(false);
 					commentField.setValue(piece.comment);
-					commentField.setFocus(true);
+					commentField.setFocused(true);
 					setInitialFocus(commentField);
 					commentEnabled = true;
 					return true;
@@ -941,7 +942,7 @@ public class GuiProgrammer extends Screen {
 		}
 
 		spellNameField.setEditable(!spectator && (piece == null || !piece.interceptKeystrokes()));
-		commentField.setFocus(false);
+		commentField.setFocused(false);
 		commentField.setVisible(false);
 		commentField.setEditable(false);
 		commentField.setValue("");

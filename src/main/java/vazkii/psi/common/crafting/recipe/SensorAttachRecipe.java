@@ -8,6 +8,7 @@
  */
 package vazkii.psi.common.crafting.recipe;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -58,7 +59,7 @@ public class SensorAttachRecipe extends CustomRecipe {
 
 	@Nonnull
 	@Override
-	public ItemStack assemble(@Nonnull CraftingContainer inv) {
+	public ItemStack assemble(@Nonnull CraftingContainer inv, RegistryAccess registryAccess) {
 		ItemStack sensor = ItemStack.EMPTY;
 		ItemStack target = ItemStack.EMPTY;
 

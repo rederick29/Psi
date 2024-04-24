@@ -114,6 +114,7 @@ public class TrickCraftingCategory implements IRecipeCategory<ITrickRecipe> {
 	public void setRecipe(IRecipeLayoutBuilder builder, ITrickRecipe recipe, IFocusGroup focuses) {
 		builder.addSlot(RecipeIngredientRole.INPUT, 1, 6).addIngredients(recipe.getInput());
 		builder.addSlot(RecipeIngredientRole.CATALYST, 22, 24).addItemStack(recipe.getAssembly());
-		builder.addSlot(RecipeIngredientRole.OUTPUT, 74, 6).addItemStack(recipe.getResultItem());
+		// TODO(rederick29): registryAccess
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 74, 6).addItemStack(recipe.getResultItem(null));
 	}
 }

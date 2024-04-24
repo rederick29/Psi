@@ -12,6 +12,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.TagBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -24,8 +27,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class PsiItemTagProvider extends ItemTagsProvider {
 
-	public PsiItemTagProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> blockTagProvider, TagsProvider<Block> tagsProvider, ExistingFileHelper existingFileHelper) {
+	public PsiItemTagProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> blockTagProvider, CompletableFuture<TagLookup<Block>> tagsProvider, ExistingFileHelper existingFileHelper) {
 		super(generator.getPackOutput(), blockTagProvider, tagsProvider, LibMisc.MOD_ID, existingFileHelper);
+	}
+
+	@Override
+	protected TagBuilder getOrCreateRawBuilder(TagKey<Item> pTag) {
+		return super.getOrCreateRawBuilder(pTag);
 	}
 
 	@Override

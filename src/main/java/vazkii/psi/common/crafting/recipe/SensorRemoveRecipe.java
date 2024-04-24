@@ -9,6 +9,7 @@
 package vazkii.psi.common.crafting.recipe;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +51,7 @@ public class SensorRemoveRecipe extends CustomRecipe {
 
 	@Nonnull
 	@Override
-	public ItemStack assemble(@Nonnull CraftingContainer inv) {
+	public ItemStack assemble(@Nonnull CraftingContainer inv, RegistryAccess registryAccess) {
 		ItemStack holdableItem = ItemStack.EMPTY;
 
 		for(int i = 0; i < inv.getContainerSize(); i++) {

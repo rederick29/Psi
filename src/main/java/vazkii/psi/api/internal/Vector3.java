@@ -10,6 +10,8 @@ package vazkii.psi.api.internal;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
@@ -250,7 +252,7 @@ public class Vector3 {
 	}
 
 	public BlockPos toBlockPos() {
-		return new BlockPos(toVec3D());
+		return new BlockPos(new Vec3i(Mth.floor(x), Mth.floor(y), Mth.floor(z)));
 	}
 
 	public double angle(Vector3 vec) {

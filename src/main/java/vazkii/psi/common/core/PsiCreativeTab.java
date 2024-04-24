@@ -31,7 +31,7 @@ public class PsiCreativeTab {
 			builder.title(Component.translatable("Psi"));
 			builder.hideTitle();
 			builder.icon(() -> new ItemStack(ModItems.cadAssemblyIron));
-			builder.displayItems((features, output, creativeTab) -> {
+			builder.displayItems((params, output) -> {
 				NonNullList<ItemStack> items = NonNullList.create();
 				ModItems.fillItems(items);
 				ModBlocks.fillItems(items);
@@ -39,6 +39,7 @@ public class PsiCreativeTab {
 				output.acceptAll(items);
 				output.accept(new ItemStack(ModItems.cadAssemblyIron));
 			});
+			// TODO(rederick29): fix gui background
 			// builder.withBackgroundLocation(new ResourceLocation(LibMisc.MOD_ID, LibResources.GUI_CREATIVE));
 			builder.build();
 		});

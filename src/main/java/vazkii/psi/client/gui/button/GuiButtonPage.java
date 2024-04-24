@@ -34,7 +34,7 @@ public class GuiButtonPage extends Button {
 	}
 
 	@Override
-	public void renderButton(PoseStack ms, int x, int y, float pTicks) {
+	public void renderWidget(PoseStack ms, int x, int y, float pTicks) {
 		if(active) {
 			boolean hover = x >= getX() && y >= getY() && x < getX() + width && y < getY() + height;
 

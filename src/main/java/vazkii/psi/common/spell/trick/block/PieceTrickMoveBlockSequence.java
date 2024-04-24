@@ -9,6 +9,7 @@
 package vazkii.psi.common.spell.trick.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -112,7 +113,7 @@ public class PieceTrickMoveBlockSequence extends PieceTrick {
 				continue;
 			}
 
-			BlockPos pushToPos = blockPos.offset(directNorm.x, directNorm.y, directNorm.z);
+			BlockPos pushToPos = blockPos.offset(Mth.floor(directNorm.x), Mth.floor(directNorm.y), Mth.floor(directNorm.z));
 			boolean isOffWorld = pushToPos.getY() < 0 || pushToPos.getY() > 256;
 			if(isOffWorld) {
 				immovableBlocks.add(blockPos);
@@ -130,7 +131,7 @@ public class PieceTrickMoveBlockSequence extends PieceTrick {
 
 		outer: for(BlockPos blockPos : moveableBlocks) {
 			BlockState state = world.getBlockState(blockPos);
-			BlockPos pushToPos = blockPos.offset(directNorm.x, directNorm.y, directNorm.z);
+			BlockPos pushToPos = blockPos.offset(Mth.floor(directNorm.x), Mth.floor(directNorm.y), Mth.floor(directNorm.z));
 			BlockState pushToState = world.getBlockState(pushToPos);
 			if(immovableBlocks.contains(pushToPos) || immovableBlocks.contains(blockPos)) {
 				continue;
@@ -138,7 +139,7 @@ public class PieceTrickMoveBlockSequence extends PieceTrick {
 			if(moveableBlocks.contains(pushToPos)) {
 				BlockPos nextPos = pushToPos;
 				while(moveableBlocks.contains(nextPos)) {
-					BlockPos nextPosPushPos = nextPos.offset(directNorm.x, directNorm.y, directNorm.z);
+					BlockPos nextPosPushPos = nextPos.offset(Mth.floor(directNorm.x), Mth.floor(directNorm.y), Mth.floor(directNorm.z));
 					BlockState nextPosPushPosState = world.getBlockState(nextPosPushPos);
 
 					if(moveableBlocks.contains(nextPosPushPos)) {

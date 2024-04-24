@@ -11,6 +11,7 @@ package vazkii.psi.common.spell.constant;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.nbt.CompoundTag;
 
@@ -58,7 +59,7 @@ public class PieceConstantNumber extends SpellPiece {
 		ms.pushPose();
 		ms.scale(1F / scale, 1F / scale, 1F);
 		ms.translate((9 - efflen / 2) * scale, 4 * scale, 0);
-		mc.font.drawInBatch(valueStr, 0, 0, color, false, ms.last().pose(), buffers, false, 0, light);
+		mc.font.drawInBatch(valueStr, 0, 0, color, false, ms.last().pose(), buffers, Font.DisplayMode.NORMAL, 0, light);
 		ms.popPose();
 	}
 

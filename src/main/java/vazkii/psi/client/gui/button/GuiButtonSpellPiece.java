@@ -37,7 +37,7 @@ public class GuiButtonSpellPiece extends Button {
 	}
 
 	@Override
-	public void renderButton(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
 		if(active && visible) {
 			boolean hover = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
 

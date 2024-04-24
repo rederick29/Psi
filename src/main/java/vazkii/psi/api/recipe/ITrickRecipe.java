@@ -9,6 +9,7 @@
 package vazkii.psi.api.recipe;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -43,7 +44,7 @@ public interface ITrickRecipe extends Recipe<RecipeWrapper> {
 
 	@Override
 	@Nonnull
-	ItemStack getResultItem();
+	ItemStack getResultItem(RegistryAccess registryAccess);
 
 	/**
 	 * @return a recommended minimum CAD assembly that can craft this recipe, for JEI display purposes.

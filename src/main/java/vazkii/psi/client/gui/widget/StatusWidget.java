@@ -40,7 +40,7 @@ public class StatusWidget extends AbstractWidget {
 	}
 
 	@Override
-	public void renderButton(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
 		RenderSystem.setShaderColor(1f, 1f, 1f, 1F);
 		RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
 		blit(ms, parent.left - 48, parent.top + 5, parent.xSize, 0, 48, 30);
@@ -66,7 +66,7 @@ public class StatusWidget extends AbstractWidget {
 			int cadX = parent.left - 42;
 			int cadY = parent.top + 12;
 
-			PsiRenderHelper.transferMsToGl(ms, () -> parent.getMinecraft().getItemRenderer().renderAndDecorateItem(cad, cadX, cadY));
+			PsiRenderHelper.transferMsToGl(ms, () -> parent.getMinecraft().getItemRenderer().renderAndDecorateItem(ms, cad, cadX, cadY));
 
 			if(mouseX > cadX && mouseY > cadY && mouseX < cadX + 16 && mouseY < cadY + 16) {
 				parent.tooltip.addAll(cad.getTooltipLines(parent.getMinecraft().player, parent.tooltipFlag));

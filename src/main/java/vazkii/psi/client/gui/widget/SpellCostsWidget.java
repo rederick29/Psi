@@ -42,7 +42,7 @@ public class SpellCostsWidget extends AbstractWidget {
 	}
 
 	@Override
-	public void renderButton(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
 		parent.compileResult.left().ifPresent(compiledSpell -> {
 			int i = 0;
 			int statX = parent.left + parent.xSize + 3;

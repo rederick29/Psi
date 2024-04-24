@@ -54,16 +54,16 @@ import java.util.function.Consumer;
 
 public class ItemPsimetalArmor extends ArmorItem implements IPsimetalTool, IPsiEventArmor {
 
-	public final EquipmentSlot type;
+	public final ArmorItem.Type type;
 	//private final LazyLoadedValue<HumanoidModel<?>> model;
 
 	private static final String TAG_TIMES_CAST = "timesCast";
 
-	public ItemPsimetalArmor(EquipmentSlot type, Properties props) {
+	public ItemPsimetalArmor(ArmorItem.Type type, Properties props) {
 		this(type, PsiAPI.PSIMETAL_ARMOR_MATERIAL, props);
 	}
 
-	public ItemPsimetalArmor(EquipmentSlot type, ArmorMaterial mat, Properties props) {
+	public ItemPsimetalArmor(ArmorItem.Type type, ArmorMaterial mat, Properties props) {
 		super(mat, type, props);
 		this.type = type;
 		/*this.model = DistExecutor.runForDist(() -> () -> new LazyLoadedValue<>(() -> this.provideArmorModelForSlot(type)),

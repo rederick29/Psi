@@ -49,7 +49,7 @@ public class GuiButtonSideConfig extends Button {
 	}
 
 	@Override
-	public void renderButton(PoseStack ms, int x, int y, float pTicks) {
+	public void renderWidget(PoseStack ms, int x, int y, float pTicks) {
 		if(active && visible && !gui.takingScreenshot) {
 			int minX = getX();
 			int minY = getY();

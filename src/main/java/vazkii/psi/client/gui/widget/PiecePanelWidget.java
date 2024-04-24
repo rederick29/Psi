@@ -62,7 +62,7 @@ public class PiecePanelWidget extends AbstractWidget implements Renderable, GuiE
 	}
 
 	@Override
-	public void renderButton(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
 		if(panelEnabled) {
 			RenderSystem.setShaderTexture(0, GuiProgrammer.texture);
 
@@ -450,9 +450,9 @@ public class PiecePanelWidget extends AbstractWidget implements Renderable, GuiE
 		});
 		searchField.visible = false;
 		searchField.setEditable(false);
-		searchField.setFocus(false);
+		searchField.setFocused(false);
 		parent.setFocused(parent.statusWidget);
-		parent.changeFocus(true);
+		parent.setFocused(true);
 	}
 
 	public void openPanel() {
@@ -468,7 +468,7 @@ public class PiecePanelWidget extends AbstractWidget implements Renderable, GuiE
 		searchField.setVisible(true);
 		searchField.active = true;
 		searchField.setEditable(true);
-		searchField.setFocus(true);
+		searchField.setFocused(true);
 		parent.setFocused(searchField);
 		updatePanelButtons();
 	}

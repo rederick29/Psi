@@ -11,6 +11,7 @@ package vazkii.psi.client.render.tile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.gui.Font;
 import org.joml.Matrix4f;
 
 import net.minecraft.client.Minecraft;
@@ -94,8 +95,8 @@ public class RenderTileProgrammer implements BlockEntityRenderer<TileProgrammer>
 
 			int color = Psi.magical ? 0 : 0xFFFFFF;
 			Minecraft mc = Minecraft.getInstance();
-			mc.font.drawInBatch(I18n.get("psimisc.name"), 0, 164, color, false, ms.last().pose(), buffers, false, 0, 0xF000F0);
-			mc.font.drawInBatch(te.spell.name, 38, 164, color, false, ms.last().pose(), buffers, false, 0, 0xF000F0);
+			mc.font.drawInBatch(I18n.get("psimisc.name"), 0, 164, color, false, ms.last().pose(), buffers, Font.DisplayMode.NORMAL, 0, 0xF000F0);
+			mc.font.drawInBatch(te.spell.name, 38, 164, color, false, ms.last().pose(), buffers, Font.DisplayMode.NORMAL, 0, 0xF000F0);
 
 			ms.popPose();
 		}

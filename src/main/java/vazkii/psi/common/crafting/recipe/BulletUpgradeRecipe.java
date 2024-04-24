@@ -11,6 +11,7 @@ package vazkii.psi.common.crafting.recipe;
 import com.google.gson.JsonObject;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -35,8 +36,8 @@ public class BulletUpgradeRecipe implements CraftingRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer inv) {
-		ItemStack output = compose.assemble(inv);
+	public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
+		ItemStack output = compose.assemble(inv, registryAccess);
 		for(int i = 0; i < inv.getContainerSize(); i++) {
 			ItemStack stack = inv.getItem(i);
 			if(stack.getItem() instanceof ItemSpellBullet) {
@@ -52,8 +53,8 @@ public class BulletUpgradeRecipe implements CraftingRecipe {
 	}
 
 	@Override
-	public ItemStack getResultItem() {
-		return compose.getResultItem();
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
+		return compose.getResultItem(registryAccess);
 	}
 
 	@Override

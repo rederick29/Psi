@@ -10,6 +10,7 @@ package vazkii.psi.common.crafting.recipe;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
@@ -48,7 +49,8 @@ public class DimensionTrickRecipe extends TrickRecipe {
 		public DimensionTrickRecipe fromJson(ResourceLocation id, JsonObject json) {
 			TrickRecipe recipe = TrickRecipe.SERIALIZER.fromJson(id, json);
 			ResourceLocation dimensionId = new ResourceLocation(GsonHelper.getAsString(json, "dimension"));
-			return new DimensionTrickRecipe(id, recipe.getPiece(), recipe.getInput(), recipe.getResultItem(), recipe.getAssembly(), dimensionId);
+			// TODO(rederick29): registryAccess
+			return new DimensionTrickRecipe(id, recipe.getPiece(), recipe.getInput(), recipe.getResultItem(null), recipe.getAssembly(), dimensionId);
 		}
 
 		@Nullable
@@ -56,7 +58,8 @@ public class DimensionTrickRecipe extends TrickRecipe {
 		public DimensionTrickRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
 			TrickRecipe recipe = TrickRecipe.SERIALIZER.fromNetwork(id, buf);
 			ResourceLocation dimensionId = buf.readResourceLocation();
-			return new DimensionTrickRecipe(id, recipe.getPiece(), recipe.getInput(), recipe.getResultItem(), recipe.getAssembly(), dimensionId);
+			// TODO(rederick29): registryAccess
+			return new DimensionTrickRecipe(id, recipe.getPiece(), recipe.getInput(), recipe.getResultItem(null), recipe.getAssembly(), dimensionId);
 		}
 
 		@Override

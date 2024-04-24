@@ -8,6 +8,7 @@
  */
 package vazkii.psi.api.internal;
 
+import net.minecraft.util.Mth;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 
@@ -37,7 +38,7 @@ public final class MathHelper {
 			return positions;
 		}
 		if(origin.equals(end)) {
-			positions.add(new BlockPos(origin.x, origin.y, origin.z));
+			positions.add(new BlockPos(Mth.floor(origin.x), Mth.floor(origin.y), Mth.floor(origin.z)));
 		} else {
 			double endX = end.x;
 			double endY = end.y;

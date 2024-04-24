@@ -30,7 +30,7 @@ public class GuiButtonHelp extends Button {
 	}
 
 	@Override
-	public void renderButton(PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(PoseStack ms, int mouseX, int mouseY, float pTicks) {
 		if(!gui.takingScreenshot) {
 			boolean overHelp = mouseX > getX() && mouseY > getY() && mouseX < getX() + 12 && mouseY < getY() + 12;
 			RenderSystem.setShaderTexture(0, GuiProgrammer.texture);

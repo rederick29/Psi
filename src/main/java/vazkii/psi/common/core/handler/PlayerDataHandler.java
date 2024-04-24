@@ -16,13 +16,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket.RelativeArgument;
+import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -41,6 +45,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import net.minecraftforge.registries.RegistryObject;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.EnumCADStat;
 import vazkii.psi.api.cad.ICAD;
@@ -90,8 +95,6 @@ public class PlayerDataHandler {
 	public static final Set<SpellContext> delayedContexts = new LinkedHashSet<>();
 
 	private static final String DATA_TAG = "PsiData";
-
-	public static final DamageSource damageSourceOverload = new DamageSource("psi-overload").bypassArmor().bypassMagic();
 
 	@Nonnull
 	public static PlayerData get(Player player) {
@@ -173,7 +176,7 @@ public class PlayerDataHandler {
 				}
 
 				PsiArmorEvent.post(new PsiArmorEvent(player, PsiArmorEvent.DAMAGE, event.getAmount(), attacker));
-				if(event.getSource().isFire()) {
+				if(event.getSource().is(TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation("minecraft", "fire")))) {
 					PsiArmorEvent.post(new PsiArmorEvent(player, PsiArmorEvent.ON_FIRE));
 				}
 			}
@@ -495,7 +498,7 @@ public class PlayerDataHandler {
 						Vector3 vec = eidosChangelog.pop();
 						if(player instanceof ServerPlayer) {
 							ServerPlayer pmp = (ServerPlayer) player;
-							pmp.connection.teleport(vec.x, vec.y, vec.z, 0, 0, ImmutableSet.of(RelativeArgument.X_ROT, RelativeArgument.Y_ROT));
+							pmp.connection.teleport(vec.x, vec.y, vec.z, 0, 0, ImmutableSet.of(RelativeMovement.X_ROT, RelativeMovement.Y_ROT));
 							pmp.connection.resetPosition();
 						} else {
 							player.setPos(vec.x, vec.y, vec.z);
@@ -686,6 +689,8 @@ public class PlayerDataHandler {
 				if(!shatter && overflow > 0) {
 					float dmg = (float) overflow / (loopcasting ? 50 : 125);
 					if(!client) {
+						Holder<DamageType> psiOverload = RegistryObject.create(PsiOverloadDamage.psiOverload.location(), Registries.DAMAGE_TYPE, LibMisc.MOD_ID).getHolder().get();
+						DamageSource damageSourceOverload = new DamageSource(psiOverload);
 						player.hurt(damageSourceOverload, dmg);
 					}
 					overflowed = true;

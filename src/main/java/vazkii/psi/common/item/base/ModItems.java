@@ -11,6 +11,7 @@ package vazkii.psi.common.item.base;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -201,10 +202,10 @@ public final class ModItems {
 			psimetalPickaxe = new ItemPsimetalPickaxe(defaultBuilder());
 			psimetalAxe = new ItemPsimetalAxe(defaultBuilder());
 			psimetalSword = new ItemPsimetalSword(defaultBuilder());
-			psimetalExosuitHelmet = new ItemPsimetalExosuitHelmet(EquipmentSlot.HEAD, defaultBuilder());
-			psimetalExosuitChestplate = new ItemPsimetalExosuitChestplate(EquipmentSlot.CHEST, defaultBuilder());
-			psimetalExosuitLeggings = new ItemPsimetalExosuitLeggings(EquipmentSlot.LEGS, defaultBuilder());
-			psimetalExosuitBoots = new ItemPsimetalExosuitBoots(EquipmentSlot.FEET, defaultBuilder());
+			psimetalExosuitHelmet = new ItemPsimetalExosuitHelmet(ArmorItem.Type.HELMET, defaultBuilder());
+			psimetalExosuitChestplate = new ItemPsimetalExosuitChestplate(ArmorItem.Type.CHESTPLATE, defaultBuilder());
+			psimetalExosuitLeggings = new ItemPsimetalExosuitLeggings(ArmorItem.Type.LEGGINGS, defaultBuilder());
+			psimetalExosuitBoots = new ItemPsimetalExosuitBoots(ArmorItem.Type.BOOTS, defaultBuilder());
 
 			ModSpellPieces.init();
 

@@ -14,6 +14,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.level.BlockEventData;
 import net.minecraft.world.level.Level;
 
 import vazkii.psi.api.spell.Spell;
@@ -37,8 +38,8 @@ public class PieceSelectorNearbySmeltables extends PieceSelectorNearby {
 		DUMMY_INV.clearContent();
 		DUMMY_INV.setItem(0, input);
 		return world.getRecipeManager().getRecipeFor(RecipeType.SMELTING, DUMMY_INV, world)
-				.map(SmeltingRecipe::getResultItem)
-				.orElse(ItemStack.EMPTY);
+					.map(r -> r.getResultItem(world.registryAccess()))
+					.orElse(ItemStack.EMPTY);
 	}
 
 	public boolean accept(Entity e) {

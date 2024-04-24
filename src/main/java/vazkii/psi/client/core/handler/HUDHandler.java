@@ -283,7 +283,7 @@ public final class HUDHandler {
 			poseStack.pushPose();
 			poseStack.translate(x + w, y - 6, 0);
 			poseStack.scale(alpha / 255F, 1F, 1);
-			PsiRenderHelper.transferMsToGl(poseStack, () -> mc.getItemRenderer().renderGuiItem(bullet, 0, 0));
+			PsiRenderHelper.transferMsToGl(poseStack, () -> mc.getItemRenderer().renderGuiItem(poseStack, bullet, 0, 0));
 			poseStack.popPose();
 		}
 	}
@@ -305,7 +305,7 @@ public final class HUDHandler {
 			poseStack.pushPose();
 			poseStack.translate(xp, y, 0F);
 			poseStack.scale(alpha, 1F, 1F);
-			PsiRenderHelper.transferMsToGl(poseStack, () -> mc.getItemRenderer().renderAndDecorateItem(remainingDisplayStack, 0, 0));
+			PsiRenderHelper.transferMsToGl(poseStack, () -> mc.getItemRenderer().renderAndDecorateItem(poseStack, remainingDisplayStack, 0, 0));
 			poseStack.scale(1F / alpha, 1F, 1F);
 			poseStack.translate(-xp, -y, 0F);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);

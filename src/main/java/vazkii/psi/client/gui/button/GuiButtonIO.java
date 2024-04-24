@@ -36,7 +36,7 @@ public class GuiButtonIO extends Button {
 	}
 
 	@Override
-	public void renderButton(@NotNull PoseStack ms, int x, int y, float pticks) {
+	public void renderWidget(@NotNull PoseStack ms, int x, int y, float pticks) {
 		if(active && !gui.takingScreenshot) {
 			boolean hover = x >= getX() && y >= getY() && x < getX() + width && y < getY() + height;
 

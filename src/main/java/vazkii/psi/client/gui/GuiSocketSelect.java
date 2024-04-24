@@ -118,7 +118,6 @@ public class GuiSocketSelect extends Screen {
 		BufferBuilder buf = tess.getBuilder();
 
 		RenderSystem.disableCull();
-		RenderSystem.disableTexture();
 		RenderSystem.enableBlend();
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
@@ -181,8 +180,6 @@ public class GuiSocketSelect extends Screen {
 		}
 		tess.end();
 
-		RenderSystem.enableTexture();
-
 		for(int seg = 0; seg < segments; seg++) {
 			boolean mouseInSector = degPer * seg < angle && angle < degPer * (seg + 1);
 			float radius = Math.max(0F, Math.min((timeIn - ((float) seg * 6F / (float) segments)) * 40F, (float) maxRadius));
@@ -205,7 +202,7 @@ public class GuiSocketSelect extends Screen {
 				int xdp = (int) ((xp - x) * mod + x);
 				int ydp = (int) ((yp - y) * mod + y);
 
-				mc.getItemRenderer().renderGuiItem(stack, xdp - 8, ydp - 8);
+				mc.getItemRenderer().renderGuiItem(ms, stack, xdp - 8, ydp - 8);
 
 				if(xsp < x) {
 					xsp -= width - 8;
@@ -252,7 +249,7 @@ public class GuiSocketSelect extends Screen {
 				ItemStack stack = controlledStacks[i];
 				int rx = xs + i * 18;
 				float ry = ys + (-yoff * shift);
-				PsiRenderHelper.transferMsToGl(ms, () -> mc.getItemRenderer().renderAndDecorateItem(stack, rx, (int) ry));
+				PsiRenderHelper.transferMsToGl(ms, () -> mc.getItemRenderer().renderAndDecorateItem(ms, stack, rx, (int) ry));
 			}
 
 		}
@@ -260,7 +257,7 @@ public class GuiSocketSelect extends Screen {
 		if(!socketableStack.isEmpty()) {
 			ms.pushPose();
 			ms.scale(scale, scale, scale);
-			PsiRenderHelper.transferMsToGl(ms, () -> mc.getItemRenderer().renderAndDecorateItem(socketableStack,
+			PsiRenderHelper.transferMsToGl(ms, () -> mc.getItemRenderer().renderAndDecorateItem(ms, socketableStack,
 					(int) (x / scale) - 8, (int) (y / scale) - 8));
 			ms.popPose();
 		}

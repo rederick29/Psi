@@ -189,7 +189,7 @@ public class ContainerCADAssembler extends AbstractContainerMenu {
 				}
 			} else if(stackInSlot.getItem() instanceof ArmorItem) {
 				ArmorItem armor = (ArmorItem) stackInSlot.getItem();
-				int armorSlot = armorStart + armor.getSlot().getFilterFlag() - 1;
+				int armorSlot = armorStart + armor.getType().getSlot().getFilterFlag() - 1;
 				if(!moveItemStackTo(stackInSlot, armorSlot, armorSlot + 1, true) &&
 						!moveItemStackTo(stackInSlot, playerStart, hotbarEnd, true)) {
 					return ItemStack.EMPTY;

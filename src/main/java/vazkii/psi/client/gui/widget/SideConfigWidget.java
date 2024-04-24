@@ -46,7 +46,7 @@ public class SideConfigWidget extends AbstractWidget {
 	}
 
 	@Override
-	public void renderButton(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
+	public void renderWidget(@NotNull PoseStack ms, int mouseX, int mouseY, float pTicks) {
 		SpellPiece piece = null;
 		if(SpellGrid.exists(GuiProgrammer.selectedX, GuiProgrammer.selectedY)) {
 			piece = parent.spell.grid.gridData[GuiProgrammer.selectedX][GuiProgrammer.selectedY];
