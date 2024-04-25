@@ -99,7 +99,7 @@ public class ClientProxy implements IProxy {
 		});
 	}
 
-	private void modelBake(ModelEvent.BakingCompleted event) {
+	private void modelBake(ModelEvent.ModifyBakingResult event) {
 		event.getModels().put(new ModelResourceLocation(ForgeRegistries.ITEMS.getKey(ModItems.cad), "inventory"), new ModelCAD());
 	}
 

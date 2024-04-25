@@ -9,10 +9,12 @@
 package vazkii.psi.common.block.base;
 
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -39,6 +41,9 @@ import vazkii.psi.common.block.tile.container.ContainerCADAssembler;
 import vazkii.psi.common.lib.LibBlockNames;
 import vazkii.psi.common.lib.LibMisc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static vazkii.psi.common.item.base.ModItems.defaultBuilder;
 
 @Mod.EventBusSubscriber(modid = LibMisc.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -64,21 +69,18 @@ public class ModBlocks {
 	@SubscribeEvent
 	public static void register(RegisterEvent evt) {
 		evt.register(ForgeRegistries.Keys.BLOCKS, helper -> {
-			BlockBehaviour.Properties metalBlockProperties = BlockBehaviour.Properties.of().mapColor(MapColor.METAL).instrument(NoteBlockInstrument.IRON_XYLOPHONE).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL);
-			BlockBehaviour metalBehaviour = new Block(metalBlockProperties);
-
-			cadAssembler = new BlockCADAssembler(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL).noOcclusion());
-			programmer = new BlockProgrammer(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL).noOcclusion());
-			conjured = new BlockConjured(Block.Properties.of().mapColor(MapColor.NONE).instrument(NoteBlockInstrument.HAT).strength(0.3F).sound(SoundType.GLASS).noOcclusion().noLootTable().lightLevel(state -> state.getValue(BlockConjured.LIGHT) ? 15 : 0).noOcclusion().isValidSpawn(NO_SPAWN).isRedstoneConductor(NO_SUFFOCATION).isSuffocating(NO_SUFFOCATION).isViewBlocking(NO_SUFFOCATION));
-			psidustBlock = new Block(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL));
-			psimetalBlock = new Block(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL));
-			psigemBlock = new Block(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL));
-			psimetalPlateBlack = new Block(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL));
-			psimetalPlateBlackLight = new Block(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL).lightLevel((blockState) -> 15));
-			psimetalPlateWhite = new Block(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL));
-			psimetalPlateWhiteLight = new Block(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL).lightLevel((blockstate) -> 15));
-			psimetalEbony = new Block(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL));
-			psimetalIvory = new Block(Block.Properties.copy(metalBehaviour).strength(5, 10).sound(SoundType.METAL));
+			cadAssembler = new BlockCADAssembler(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL).noOcclusion());
+			programmer = new BlockProgrammer(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL).noOcclusion());
+			conjured = new BlockConjured(Block.Properties.of().instrument(NoteBlockInstrument.HAT).noLootTable().lightLevel(state -> state.getValue(BlockConjured.LIGHT) ? 15 : 0).noOcclusion().isValidSpawn(NO_SPAWN).isRedstoneConductor(NO_SUFFOCATION).isSuffocating(NO_SUFFOCATION).isViewBlocking(NO_SUFFOCATION));
+			psidustBlock = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psimetalBlock = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psigemBlock = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psimetalPlateBlack = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psimetalPlateBlackLight = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL).lightLevel((blockState) -> 15));
+			psimetalPlateWhite = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psimetalPlateWhiteLight = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL).lightLevel((blockstate) -> 15));
+			psimetalEbony = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
+			psimetalIvory = new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5, 10).sound(SoundType.METAL));
 
 			helper.register(new ResourceLocation(LibMisc.MOD_ID, LibBlockNames.CAD_ASSEMBLER), cadAssembler);
 			helper.register(new ResourceLocation(LibMisc.MOD_ID, LibBlockNames.PROGRAMMER), programmer);
@@ -116,9 +118,26 @@ public class ModBlocks {
 
 		evt.register(ForgeRegistries.Keys.MENU_TYPES, helper -> {
 			helper.register(ForgeRegistries.BLOCKS.getKey(cadAssembler), containerCADAssembler);
-			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> {
+			DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 				MenuScreens.register(containerCADAssembler, GuiCADAssembler::new);
 			});
 		});
+	}
+
+
+	public static List<ItemStack> getCreativeTabItems() {
+		List<ItemStack> items = new ArrayList<>();
+		items.add(new ItemStack(ModBlocks.cadAssembler));
+		items.add(new ItemStack(ModBlocks.programmer));
+		items.add(new ItemStack(ModBlocks.psidustBlock));
+		items.add(new ItemStack(ModBlocks.psimetalBlock));
+		items.add(new ItemStack(ModBlocks.psigemBlock));
+		items.add(new ItemStack(ModBlocks.psimetalPlateBlack));
+		items.add(new ItemStack(ModBlocks.psimetalPlateBlackLight));
+		items.add(new ItemStack(ModBlocks.psimetalPlateWhite));
+		items.add(new ItemStack(ModBlocks.psimetalPlateWhiteLight));
+		items.add(new ItemStack(ModBlocks.psimetalEbony));
+		items.add(new ItemStack(ModBlocks.psimetalIvory));
+		return items;
 	}
 }

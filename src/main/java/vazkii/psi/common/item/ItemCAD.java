@@ -338,7 +338,7 @@ public class ItemCAD extends Item implements ICAD {
 			Optional<ITrickRecipe> recipe = world.getRecipeManager().getRecipeFor(ModCraftingRecipes.TRICK_RECIPE_TYPE, inv, world)
 					.filter(predicate);
 			if(recipe.isPresent()) {
-				ItemStack outCopy = recipe.get().getResultItem(RegistryAccess.EMPTY).copy();
+				ItemStack outCopy = recipe.get().getResultItem(player.level().registryAccess()).copy();
 				int count = stack.getCount() * outCopy.getCount();
 				while(count > 64) {
 					int dropCount = world.getRandom().nextInt(32) + 32;

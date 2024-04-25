@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "psi:spell/operator_vector_extract_y"
+	}
+}

@@ -22,7 +22,9 @@ import static vazkii.psi.api.PsiAPI.MOD_ID;
 @OnlyIn(Dist.CLIENT)
 public class ClientPsiAPI {
 
-	public static final ResourceLocation PSI_PIECE_TEXTURE_ATLAS = new ResourceLocation(MOD_ID, "spell_pieces");
+	// public static final ResourceLocation PSI_PIECE_TEXTURE_ATLAS = new ResourceLocation(MOD_ID, "spell_pieces");
+	// TODO(rederick29): make an actual atlas, don't just use the blocks atlas
+	public static final ResourceLocation PSI_PIECE_TEXTURE_ATLAS = new ResourceLocation("textures/atlas/blocks.png");
 	private static final Map<ResourceLocation, Material> simpleSpellTextures = new ConcurrentHashMap<>();
 
 	/**
@@ -54,5 +56,4 @@ public class ClientPsiAPI {
 	public static Collection<Material> getAllSpellPieceMaterial() {
 		return simpleSpellTextures.values();
 	}
-
 }

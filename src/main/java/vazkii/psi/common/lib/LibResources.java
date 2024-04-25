@@ -22,7 +22,7 @@ public class LibResources {
 	public static final String PREFIX_MISC = PREFIX_MOD + "textures/misc/";
 
 	public static final String SHADER_PSI_BAR = "psi_bar";
-	public static final String GUI_CREATIVE = "psi.png";
+	public static final String GUI_CREATIVE = "textures/gui/container/creative_inventory/tab_psi.png";
 	public static final String GUI_CAD_ASSEMBLER = PREFIX_GUI + "cad_assembler.png";
 	public static final String GUI_PSI_BAR = PREFIX_GUI + "psi_bar.png";
 	public static final String GUI_PSI_BAR_MASK = PREFIX_GUI + "psi_bar_mask.png";

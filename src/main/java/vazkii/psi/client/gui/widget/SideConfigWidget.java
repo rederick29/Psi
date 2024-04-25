@@ -52,7 +52,7 @@ public class SideConfigWidget extends AbstractWidget {
 		if(configEnabled && !parent.takingScreenshot) {
 			graphics.blit(GuiProgrammer.texture, parent.left - 81, parent.top + 55, parent.xSize, 30, 81, 115); // TODO(Kamefrede): 1.20 check if this is correct
 			String configStr = I18n.get("psimisc.config");
-			graphics.drawString(this.parent.getMinecraft().font, configStr, parent.left - parent.getMinecraft().font.width(configStr) - 2, parent.top + 45, 0xFFFFFF);
+			graphics.drawString(this.parent.getMinecraft().font, configStr, parent.left - parent.getMinecraft().font.width(configStr) - 2, parent.top + 45, 0xFFFFFF, true);
 
 			int i = 0;
 			if(piece != null) {
@@ -75,7 +75,7 @@ public class SideConfigWidget extends AbstractWidget {
 						localized = ChatFormatting.UNDERLINE + localized;
 					}
 
-					graphics.drawString(this.parent.getMinecraft().font, localized, x, y, 0xFFFFFF);
+					graphics.drawString(this.parent.getMinecraft().font, localized, x, y, 0xFFFFFF, true);
 
 					i++;
 				}

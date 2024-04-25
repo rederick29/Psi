@@ -9,6 +9,7 @@
 package vazkii.psi.common.core;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -17,6 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegisterEvent;
 
+import vazkii.psi.common.block.base.ModBlocks;
 import vazkii.psi.common.item.ItemCAD;
 import vazkii.psi.common.item.base.ModItems;
 import vazkii.psi.common.lib.LibMisc;
@@ -34,7 +36,11 @@ public class PsiCreativeTab {
 					.icon(() -> new ItemStack(ModItems.cadAssemblyIron))
 					.displayItems((parameters, output) -> {
 						output.acceptAll(ItemCAD.getCreativeTabItems());
+						output.acceptAll(ModItems.getCreativeTabItems());
+						output.acceptAll(ModBlocks.getCreativeTabItems());
 					})
+					.title(Component.literal("Psi"))
+					.withSearchBar()
 					.hideTitle()
 					.withBackgroundLocation(new ResourceLocation(LibMisc.MOD_ID, LibResources.GUI_CREATIVE))
 					.build();
